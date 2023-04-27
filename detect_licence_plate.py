@@ -45,11 +45,11 @@ for r in result:
                     gray_detected=cv2.cvtColor(ocr_img,cv2.COLOR_BGR2GRAY)
                     thresh = cv2.threshold(gray_detected, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
 
-                    # Apply some image processing to remove noise
+ 
                     kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3,3))
                     opening = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, kernel, iterations=1)
                     opening = cv2.GaussianBlur(opening, (1,1), 0)
-                    # Perform OCR on the image
+
                     text = pytesseract.image_to_string(opening,lang=lang)
                     
                     print(text)
