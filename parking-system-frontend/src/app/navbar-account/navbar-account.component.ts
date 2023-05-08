@@ -11,7 +11,7 @@ export class NavbarAccountComponent {
 	active = false;
 	clicked = false;
 	
-	constructor(private _location: Location) {}
+	constructor() {}
 
 	//icon on clicked
 	onIconClicked() {

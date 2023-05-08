@@ -11,6 +11,9 @@ import { ParkingsPageComponent } from './parkings-page/parkings-page.component';
 import { ReservationsPageComponent } from './reservations-page/reservations-page.component';
 import { PaymentsPageComponent } from './payments-page/payments-page.component';
 import { ChangePasswordPageComponent } from './change-password-page/change-password-page.component';
+import { ParkingCardComponent } from './parking-card/parking-card.component';
+import { ReservationCardComponent } from './reservation-card/reservation-card.component';
+import { PaymentCardComponent } from './payment-card/payment-card.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +25,10 @@ import { ChangePasswordPageComponent } from './change-password-page/change-passw
     ParkingsPageComponent,
     ReservationsPageComponent,
     PaymentsPageComponent,
-    ChangePasswordPageComponent
+    ChangePasswordPageComponent,
+    ParkingCardComponent,
+    ReservationCardComponent,
+    PaymentCardComponent
   ],
   imports: [
     BrowserModule,

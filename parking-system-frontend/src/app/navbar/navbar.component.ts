@@ -17,6 +17,7 @@ export class NavbarComponent implements OnInit{
 			if (event instanceof NavigationEnd) {
 				this.visible = event.url != '/login';
 			}
+			
 		});
 	}
 	

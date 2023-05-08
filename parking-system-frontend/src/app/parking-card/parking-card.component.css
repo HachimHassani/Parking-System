@@ -1,0 +1,48 @@
+
+.parking-card-icon {
+    height: 100px;
+}
+
+.parking-card-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    flex: auto;
+}
+
+.parking-card-name {
+    margin-bottom: 8px;
+}
+
+.parking-card-location {
+    font-size: larger;
+    opacity: 80%;
+}
+
+.parking-card-buttons {
+    width: 30%;
+    min-width: 250px;
+    display: flex;
+    align-items: flex-end;
+    gap: 16px;
+    
+}
+
+.parking-card-more {
+    padding: 4px;
+    flex: 1;
+    background-color: white;
+    border: none;
+    font-size: x-large;
+}
+
+.parking-card-more:hover {
+    cursor: pointer;
+    text-decoration:underline;
+}
+
+.parking-card-buy {
+    flex: 1;
+    font-size: x-large;
+}
