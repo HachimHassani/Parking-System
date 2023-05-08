@@ -20,10 +20,4 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('parking-system-frontend');
   });
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('parking-system-frontend app is running!');
-  });
 });

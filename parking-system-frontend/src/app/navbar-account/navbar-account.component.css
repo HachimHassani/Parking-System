@@ -1,0 +1,93 @@
+.navbar-account {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.navbar-account-icon {
+    height: 52px;
+    border-radius: 100%;
+    outline: 0px solid rgba(103, 103, 103, 0.383);
+    transition: outline-width 0.05s;
+}
+
+.navbar-account-icon-active {
+    height: 52px;
+    outline-width: 4px;
+}
+
+.navbar-account-icon:hover {
+    cursor: pointer;
+}
+
+
+
+.navbar-account-details {
+    position: fixed;
+    top: -180px;
+
+    width: 100%;
+    max-width: 260px;
+    background-color: white;
+    
+    box-shadow: 0px 2px 15px 0px rgba(0, 0, 0, 0.145);
+
+    border-radius: 8px;
+    overflow: hidden;
+
+    opacity: 0%;
+    transition: all 0.5s;
+}
+
+.navbar-account-details-active {
+    top: 80px;
+    opacity: 100%;
+}
+
+.navbar-account-details-div {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.582);
+    
+}
+
+.navbar-account-details-div:first-child {
+    flex-direction: row;
+    align-items: center;
+    padding: 12px;
+    
+}
+
+.navbar-account-details-div:last-child {
+    display: flex;
+    gap: 8px;
+    border-bottom: none;
+}
+
+.navbar-account-details-icon {
+    width: 48px;
+    height: 48px;
+}
+
+.navbar-account-button {
+    text-decoration: none;
+    color: black;
+    font-size: large;
+    padding: 8px;
+    transition: background-color 0.2s;
+    background-color: rgba(159, 159, 159, 0);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    
+}
+
+.navbar-account-button:hover {
+    background-color: rgb(159, 159, 159);
+}
+
+.navbar-account-button-icon {
+    width: 24px;
+    height: 24px;
+}
