@@ -1,4 +1,7 @@
-<div class="navbar-filters" >
+<div class="navbar-filters " 
+    [ngClass]="{
+        'navbar-filters-visible': visible
+    }">
     <div class="navbar-filters-order-list">
         <a class="navbar-filters-order" [routerLink]="['/']">
             <img class="navbar-filters-order-icon" src="assets/history.png" />

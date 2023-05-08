@@ -1,6 +1,7 @@
 .navbar-filters {
     position: fixed;
     top:64px;
+    left: -50px;
 
     width: 400px;
     height: 100%;
@@ -19,8 +20,18 @@
     /* IE and Edge */
     scrollbar-width: none;
     /* Firefox */
-    
 
+    visibility: hidden;
+    opacity: 0%;
+
+    transition: all 0.2s;
+    
+}
+
+.navbar-filters-visible {
+    visibility: visible;
+    opacity: 100%;
+    left: 0px;
 }
 
 .navbar-filters::-webkit-scrollbar {

@@ -7,6 +7,10 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { NavbarAccountComponent } from './navbar-account/navbar-account.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { NavbarFiltersComponent } from './navbar-filters/navbar-filters.component';
+import { ParkingsPageComponent } from './parkings-page/parkings-page.component';
+import { ReservationsPageComponent } from './reservations-page/reservations-page.component';
+import { PaymentsPageComponent } from './payments-page/payments-page.component';
+import { ChangePasswordPageComponent } from './change-password-page/change-password-page.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +18,11 @@ import { NavbarFiltersComponent } from './navbar-filters/navbar-filters.componen
     NavbarComponent,
     NavbarAccountComponent,
     LoginPageComponent,
-    NavbarFiltersComponent
+    NavbarFiltersComponent,
+    ParkingsPageComponent,
+    ReservationsPageComponent,
+    PaymentsPageComponent,
+    ChangePasswordPageComponent
   ],
   imports: [
     BrowserModule,
