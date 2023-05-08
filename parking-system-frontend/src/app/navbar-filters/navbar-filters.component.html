@@ -1,3 +1,31 @@
-<div class="navbar-filters">
-    
+<div class="navbar-filters" >
+    <div class="navbar-filters-order-list">
+        <a class="navbar-filters-order" [routerLink]="['/']">
+            <img class="navbar-filters-order-icon" src="assets/history.png" />
+            Recent
+        </a>
+        <a class="navbar-filters-order" [routerLink]="['/']">
+            <img class="navbar-filters-order-icon" src="assets/heart.png" />
+            Collection
+        </a>
+        <a class="navbar-filters-order" [routerLink]="['/']">
+            <img class="navbar-filters-order-icon" src="assets/fire.png" />
+            Popular
+        </a>
+        <a class="navbar-filters-order" [routerLink]="['/']">
+            <img class="navbar-filters-order-icon" src="assets/shopping-bag.png" />
+            New
+        </a>
+    </div>
+
+    <div class="navbar-filters-cities"
+        (mouseenter) = "onMouseEnterNavbar()"
+        (mouseleave) = "onMouseLeaveNavbar()">
+
+        <a class="navbar-filters-city" 
+        *ngFor="let city of cities; let i = index"
+        [style.opacity] = "mouseInside? 100.0: (1 - i /10)">
+            {{ city }}
+        </a>
+    </div>
 </div>

@@ -1,0 +1,86 @@
+.navbar-filters {
+    position: fixed;
+    top:64px;
+
+    width: 400px;
+    height: 100%;
+
+    background-color: white;
+    
+    z-index: 99;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    overflow: auto;
+
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+    
+
+}
+
+.navbar-filters::-webkit-scrollbar {
+    display: none;
+}
+
+.navbar-filters-order-list {
+    margin-top: 32px;
+    padding-bottom: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    width: 320px;
+
+    border-bottom: 1px solid rgb(203, 203, 203);
+}
+
+.navbar-filters-order {
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    text-decoration: none;
+    color: black;
+    font-size: larger;
+    border-radius: 16px;
+    transition: all 0.2s;
+    
+}
+
+.navbar-filters-order:hover {
+    background-color: rgb(227, 227, 227);
+}
+
+.navbar-filters-order-icon {
+    height: 42px;
+    
+}
+
+
+.navbar-filters-cities {
+    margin: 16px;
+    display: flex;
+    flex-direction: column;
+    width: 320px;
+    gap: 8px;
+    
+
+}
+
+.navbar-filters-city {
+    padding: 8px;
+    font-size: large;
+    border-radius: 8px;
+    transition: all 0.1s;
+    width: 60%;
+}
+
+.navbar-filters-city:hover {
+    background-color: rgb(222, 222, 222);
+    cursor: pointer;
+}
