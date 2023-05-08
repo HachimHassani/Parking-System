@@ -24,6 +24,9 @@ public class Reservation {
 
     private boolean active;
 
+    public Reservation(){
+
+    }
     public Reservation(User user, ParkingSpace parkingSpace, LocalDateTime from, LocalDateTime to) {
         this.user = user;
         this.parkingSpace = parkingSpace;
@@ -39,4 +42,45 @@ public class Reservation {
     public void setId(String id) {
         this.id = id;
     }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public ParkingSpace getReservedSpace() {
+        return parkingSpace;
+    }
+
+    public void setReservedSpace(ParkingSpace parkingSpace) {
+        this.parkingSpace = parkingSpace;
+    }
+
+    public LocalDateTime getFrom() {
+        return from;
+    }
+
+    public void setFrom(LocalDateTime from) {
+        this.from = from;
+    }
+
+    public LocalDateTime getTo() {
+        return to;
+    }
+
+    public void setTo(LocalDateTime to) {
+        this.to = to;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
 }

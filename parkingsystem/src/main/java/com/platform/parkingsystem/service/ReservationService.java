@@ -5,6 +5,7 @@ import com.platform.parkingsystem.api.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -25,6 +26,9 @@ public class ReservationService {
         return reservationRepository.save(reservation);
     }
 
+    public List<Reservation> getAllReservations() {
+        return reservationRepository.findAll();
+    }
     public boolean deleteReservation(String id) {
         Optional<Reservation> reservation = reservationRepository.findById(id);
         if (reservation.isPresent()) {

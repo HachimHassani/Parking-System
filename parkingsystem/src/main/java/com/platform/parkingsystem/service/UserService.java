@@ -4,9 +4,11 @@ import com.platform.parkingsystem.api.model.User;
 import com.platform.parkingsystem.api.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -43,5 +45,30 @@ public class UserService {
 
     public void deleteUser(String id) {
         userRepository.deleteById(id);
+    }
+
+
+    private final PasswordEncoder passwordEncoder;
+
+    public UserService(UserRepository userRepository, PasswordEncoder pass) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = pass;
+    }
+
+    public User register(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return userRepository.save(user);
+    }
+
+
+    public User validateUser(String email, String password) {
+        Optional<User> optionalUser = userRepository.findByEmail(email);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            if (passwordEncoder.matches(password, user.getPassword())) {
+                return user;
+            }
+        }
+        return null;
     }
 }
