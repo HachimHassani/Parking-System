@@ -1,4 +1,6 @@
 import { Component, HostListener } from '@angular/core';
+import { Location } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'app-navbar-account',
@@ -9,10 +11,13 @@ export class NavbarAccountComponent {
 	active = false;
 	clicked = false;
 	
+	constructor(private _location: Location) {}
+
 	//icon on clicked
 	onIconClicked() {
 		this.active = !this.active;
 		this.clicked = true;
+
 	}
 
 	//on click everywhere 

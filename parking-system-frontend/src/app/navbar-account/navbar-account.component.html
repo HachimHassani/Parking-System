@@ -18,12 +18,27 @@
 		</div>
 
 		<div class="navbar-account-details-div">
-			<a class="navbar-account-button" href="/"> 
-				<img src="assets/padlock.png" class="navbar-account-button-icon"/>
+			<a class="navbar-account-button" [routerLink]="['/']">
+				<img src="assets/reservation.png" class="navbar-account-button-icon" />
+				My Reservations
+			</a>
+
+			<a class="navbar-account-button" [routerLink]="['/']">
+				<img src="assets/credit-card.png" class="navbar-account-button-icon" />
+				My Payements
+			</a>
+		</div>
+
+		<div class="navbar-account-details-div">
+			<a class="navbar-account-button" [routerLink]="['/']" > 
+				<img src="assets/padlock.png" 
+				class="navbar-account-button-icon"/>
 				Change My Password 
 			</a>
-			<a class="navbar-account-button" href="/"> 
-				<img src="assets/logout.png" class="navbar-account-button-icon"/>
+
+			<a class="navbar-account-button" [routerLink]="['/login']"> 
+				<img src="assets/logout.png" 
+				class="navbar-account-button-icon"/>
 				Logout 
 			</a>
 		</div>

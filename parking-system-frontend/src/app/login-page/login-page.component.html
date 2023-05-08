@@ -1,0 +1,54 @@
+<div class="login-container" >
+
+    <div class="login">
+        <h1 class="login-title">
+            <img class="login-title-icon" src="assets/parking-icon.svg"/>
+            arking System
+        </h1>
+
+        <!--Login form-->
+        <form class="login-forum" *ngIf="isLogin"> 
+            <div class="login-forum-div">
+                <label class="login-forum-label"> Email </label>
+                <input class="login-forum-input" type="text" placeholder="something@example.com"/>
+            </div>
+
+            <div class="login-forum-div">
+                <label class="login-forum-label"> Password </label>
+                <input class="login-forum-input" type="password" placeholder="*********"/>
+            </div>
+        </form>
+
+        <!--Signin forum-->
+        <form class="login-forum" *ngIf="!isLogin">
+            <div class="login-forum-div">
+                <label class="login-forum-label"> Email </label>
+                <input class="login-forum-input" type="text" placeholder="something@example.com" />
+            </div>
+
+            <div class="login-forum-div">
+                <label class="login-forum-label"> Password </label>
+                <input class="login-forum-input" type="password" placeholder="*********" />
+            </div>
+        
+            <div class="login-forum-div">
+                <label class="login-forum-label"> Confirm Password </label>
+                <input class="login-forum-input" type="password" placeholder="*********" />
+            </div>
+        </form>
+
+        <!--buttons-->
+        <div class="login-buttons">
+            <button class="login-button login-button-positive"
+            (click)="onPositiveClicked()"> 
+                {{ isLogin? 'Login': 'Sign in'}} 
+            </button>
+            
+            <button class="login-button login-button-negative" 
+            (click)="switchLoginMode()"> 
+                {{ !isLogin? 'Login': 'Sign in'}} 
+            </button>
+        </div>
+    </div>
+
+</div>
