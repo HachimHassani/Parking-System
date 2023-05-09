@@ -1,0 +1,80 @@
+.reservation-card {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+}
+
+
+.reservation-card-main {
+    display: flex;
+    align-items: center;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.reservation-parking-info {
+    flex: auto;
+}
+
+.reservation-time {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.reservation-time h3 {
+    margin: 4px;
+}
+
+.reservation-card-timeline {
+    padding-top: 16px;
+    padding-left: 10%;
+    padding-right: 10%;
+
+    display: flex;
+    align-items: center;
+    width: auto;
+    
+}
+
+.reservation-card-step-cicle {
+    transform: scale(2);
+    width: 16px;
+    height: 16px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 100%;
+    border: 1px solid black;
+    z-index: -1;
+}
+
+
+.reservation-card-step-line {
+    width: auto;
+    flex: auto;
+    height: 16px;
+    background-color: rgb(255, 255, 255);
+    border: 2px solid black;
+    border-right-style: none;
+    border-left-style: none;
+    
+}
+
+.reservation-card-step-filled{
+    background-color: black;
+    z-index: 2;
+}
+
+.reservation-card-timeline-description {
+    
+    padding-left: 5%;
+    padding-right: 5%;
+
+    display: flex;
+    align-items: center;
+    width: auto;
+
+}
+
+.reservation-card-timeline-description span {
+    flex: auto;
+}

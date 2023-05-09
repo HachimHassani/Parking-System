@@ -14,6 +14,8 @@ import { ChangePasswordPageComponent } from './change-password-page/change-passw
 import { ParkingCardComponent } from './parking-card/parking-card.component';
 import { ReservationCardComponent } from './reservation-card/reservation-card.component';
 import { PaymentCardComponent } from './payment-card/payment-card.component';
+import { CardComponent } from './card/card.component';
+import { ProgressiveCardsLoaderComponent } from './progressive-cards-loader/progressive-cards-loader.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,9 @@ import { PaymentCardComponent } from './payment-card/payment-card.component';
     ChangePasswordPageComponent,
     ParkingCardComponent,
     ReservationCardComponent,
-    PaymentCardComponent
+    PaymentCardComponent,
+    CardComponent,
+    ProgressiveCardsLoaderComponent
   ],
   imports: [
     BrowserModule,

@@ -1,1 +1,41 @@
-<p>reservation-card works!</p>
+<div class="card reservation-card" [ngClass]="{
+        'card-visible': visible
+    }">
+    <div class="reservation-card-main">
+        <div class="reservation-parking-info">
+            <h2> Parking's name </h2>
+            <p> Marrakech </p>
+        </div>
+
+        <div class="reservation-time">
+            <h1> 16h32min21s </h1>
+            <h3> Before Finished </h3>
+        </div>
+    </div>
+
+    <div class="reservation-card-timeline">
+        <span class="reservation-card-step-cicle reservation-card-step-filled"> </span> 
+
+        <span class="reservation-card-step-line reservation-card-step-filled"> </span>
+        
+        <span class="reservation-card-step-cicle reservation-card-step-filled"> </span>
+
+        <span class="reservation-card-step-line">  </span>
+
+        <span class="reservation-card-step-cicle"> </span>
+    </div>
+
+    <div class="reservation-card-timeline-description">
+        <h3> Reserved </h3>
+
+        <span>  </span>
+
+        <h3> Available </h3>
+
+        <span>  </span>
+
+        <h3> Finished </h3>
+    </div>
+
+
+</div>

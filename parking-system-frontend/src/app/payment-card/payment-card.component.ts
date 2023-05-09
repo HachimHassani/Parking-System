@@ -1,28 +1,18 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { CardComponent } from '../card/card.component';
 
 @Component({
 	selector: 'app-payment-card',
 	templateUrl: './payment-card.component.html',
 	styleUrls: ['./payment-card.component.css']
 })
-export class PaymentCardComponent {
-	visible = false;
+export class PaymentCardComponent extends CardComponent {
 	id = 0;
-
-	show() {
-		this.visible = true;
-	}
-
-	hide() {
-		this.visible = false;
-	}
 
 	onDeleteClicked() {
 		this.hide();
 		setTimeout(() => {
-			this.deleteCard.emit({
-				id: this.id
-			});
+			this.deleteCard.emit();
 		}, 1000);
 	}
 

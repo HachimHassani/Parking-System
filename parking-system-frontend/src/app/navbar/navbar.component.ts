@@ -9,6 +9,7 @@ import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 })
 export class NavbarComponent implements OnInit{
 	visible=true;
+	titleHovered = false;
 
 	constructor(private router: Router) {}
 	
