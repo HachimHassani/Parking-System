@@ -47,6 +47,7 @@ public class ReservationControllerTests {
         reservation.setTo(LocalDateTime.now().plusHours(2));
         reservation.setReservedSpace(new ParkingSpace());
 
+
         when(reservationService.createReservation(any(Reservation.class))).thenReturn(reservation);
 
         mockMvc = MockMvcBuilders.standaloneSetup(reservationController).build();

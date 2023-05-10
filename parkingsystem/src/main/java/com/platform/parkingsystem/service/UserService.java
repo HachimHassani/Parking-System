@@ -4,6 +4,7 @@ import com.platform.parkingsystem.api.model.User;
 import com.platform.parkingsystem.api.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -39,7 +40,7 @@ public class UserService {
         existingUser.setEmail(user.getEmail());
         existingUser.setPhone(user.getPhone());
         existingUser.setLicensePlate(user.getLicensePlate());
-        existingUser.setPassword(user.getPassword());
+
         return userRepository.save(existingUser);
     }
 
@@ -47,7 +48,7 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-
+    @Autowired
     private final PasswordEncoder passwordEncoder;
 
     public UserService(UserRepository userRepository, PasswordEncoder pass) {
@@ -55,20 +56,20 @@ public class UserService {
         this.passwordEncoder = pass;
     }
 
-    public User register(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
-    }
-
-
-    public User validateUser(String email, String password) {
-        Optional<User> optionalUser = userRepository.findByEmail(email);
-        if (optionalUser.isPresent()) {
-            User user = optionalUser.get();
-            if (passwordEncoder.matches(password, user.getPassword())) {
-                return user;
-            }
+        public User register(User user) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            return userRepository.save(user);
         }
-        return null;
-    }
+
+
+        public User validateUser(String email, String password) {
+            Optional<User> optionalUser = userRepository.findByEmail(email);
+            if (optionalUser.isPresent()) {
+                User user = optionalUser.get();
+                if (passwordEncoder.matches(password, user.getPassword())) {
+                    return user;
+                }
+            }
+            return null;
+        }
 }

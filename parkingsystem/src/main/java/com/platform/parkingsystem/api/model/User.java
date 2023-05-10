@@ -1,22 +1,25 @@
 package com.platform.parkingsystem.api.model;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
 
 @Document(collection = "users")
-public class User implements UserDetails  {
+public class User  implements UserDetails {
     @Id
     private String id;
 
-    private String username;
+
     private String firstName;
     private String lastName;
     private String email;
@@ -26,9 +29,11 @@ public class User implements UserDetails  {
 
     private List<String> roles;
 
+    @DBRef(lazy = true)
+    private List<ParkingLot> favourites;
     // Constructor
-    public User(String username,String firstName, String lastName, String email, String phone, String licensePlate, String password) {
-        this.username = username;
+    public User(String firstName, String lastName, String email, String phone, String licensePlate, String password) {
+
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -37,6 +42,9 @@ public class User implements UserDetails  {
         this.password = password;
     }
 
+    public User(){
+
+    }
     // Getters and Setters
     public String getFirstName() {
         return firstName;
@@ -83,20 +91,34 @@ public class User implements UserDetails  {
     public void setPassword(String password) {
         this.password = password;
     }
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles.stream().map(role -> new SimpleGrantedAuthority("ROLE_" + role)).collect(Collectors.toList());
-    }
 
-    @Override
+
     public String getPassword() {
         return password;
+    }
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        Collection<GrantedAuthority> authorities = new HashSet<>();
+        for (String role : roles) {
+            authorities.add(new SimpleGrantedAuthority(role));
+        }
+        return authorities;
+    }
+
+
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
+    }
+
+    public List<String> getRoles() {
+        return roles;
     }
 
     @Override
     public String getUsername() {
-        return username;
+        return email;
     }
+
 
     @Override
     public boolean isAccountNonExpired() {
@@ -116,6 +138,10 @@ public class User implements UserDetails  {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public List<ParkingLot> getFavourites() {
+        return favourites;
     }
 
 }

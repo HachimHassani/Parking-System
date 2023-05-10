@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/reservations")
@@ -19,6 +20,12 @@ public class ReservationController {
     public ResponseEntity<Reservation> createReservation(@RequestBody Reservation reservation) {
         Reservation createdReservation = reservationService.createReservation(reservation);
         return ResponseEntity.created(URI.create("/api/reservations/" + createdReservation.getId())).body(createdReservation);
+    }
+
+    @GetMapping()
+    public ResponseEntity<List<Reservation>> getAllReservations() {
+        List<Reservation> reservations = reservationService.getAllReservations();
+        return ResponseEntity.ok(reservations);
     }
 
     @GetMapping("/{id}")
