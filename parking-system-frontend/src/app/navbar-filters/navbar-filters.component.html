@@ -3,32 +3,39 @@
         'navbar-filters-visible': visible
     }">
     <div class="navbar-filters-order-list">
-        <a class="navbar-filters-order" [routerLink]="['/']">
-            <img class="navbar-filters-order-icon" src="assets/history.png" />
-            Recent
-        </a>
-        <a class="navbar-filters-order" [routerLink]="['/']">
-            <img class="navbar-filters-order-icon" src="assets/heart.png" />
-            Collection
-        </a>
-        <a class="navbar-filters-order" [routerLink]="['/']">
-            <img class="navbar-filters-order-icon" src="assets/fire.png" />
-            Popular
-        </a>
-        <a class="navbar-filters-order" [routerLink]="['/']">
-            <img class="navbar-filters-order-icon" src="assets/shopping-bag.png" />
-            New
+        <a class="navbar-filters-order" 
+        *ngFor="let order of orderButtons"
+        [ngClass]="{
+            'navbar-filters-order-active': filter.order == order.code
+        }"
+        (click)="addOrderToFilter(order.code)">
+            <img class="navbar-filters-order-icon" [src]="order.imageSrc" />
+            {{ order.name }}
         </a>
     </div>
 
     <div class="navbar-filters-cities"
-        (mouseenter) = "onMouseEnterNavbar()"
-        (mouseleave) = "onMouseLeaveNavbar()">
+    (mouseenter) = "onMouseEnterNavbar()"
+    (mouseleave) = "onMouseLeaveNavbar()">
+        <!--all cities-->
+        <a class="navbar-filters-city"
+        [ngClass]="{
+            'navbar-filters-city-active': filter.city == 'all'
+        }"
+        (click)="addCityToFilter('all')">
+            All
+        </a>
 
+        <!--specific city-->
         <a class="navbar-filters-city" 
         *ngFor="let city of cities; let i = index"
-        [style.opacity] = "mouseInside? 100.0: (1 - i /10)">
-            {{ city }}
+        [ngClass]="{
+            'navbar-filters-city-active': filter.city == city.name
+        }"
+        [style.opacity] = "mouseInside? 100.0: (1 - i /10)"
+        (click)="addCityToFilter(city.name)">
+            {{ city.name }}
         </a>
+
     </div>
 </div>

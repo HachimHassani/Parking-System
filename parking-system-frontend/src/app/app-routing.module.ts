@@ -7,6 +7,7 @@ import { PaymentsPageComponent } from './payments-page/payments-page.component';
 import { ReservationsPageComponent } from './reservations-page/reservations-page.component';
 
 const routes: Routes = [
+  //user
   {
     path: 'login',
     component: LoginPageComponent
@@ -15,10 +16,12 @@ const routes: Routes = [
     path: 'change-password',
     component: ChangePasswordPageComponent
   },
+  //home pages
   {
     path: '',
-    component: ParkingsPageComponent
+    component: ParkingsPageComponent,
   },
+  //historique
   {
     path: 'payments',
     component: PaymentsPageComponent

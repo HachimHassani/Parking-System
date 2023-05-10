@@ -18,29 +18,29 @@
 		</div>
 
 		<div class="navbar-account-details-div">
-			<a class="navbar-account-button" [routerLink]="['/reservations']">
+			<router-outlet class="navbar-account-button" [routerLink]="['/reservations']">
 				<img src="assets/reservation.png" class="navbar-account-button-icon" />
 				My Reservations
-			</a>
+			</router-outlet>
 
-			<a class="navbar-account-button" [routerLink]="['/payments']">
+			<router-outlet class="navbar-account-button" [routerLink]="['/payments']">
 				<img src="assets/credit-card.png" class="navbar-account-button-icon" />
 				My Payments
-			</a>
+			</router-outlet>
 		</div>
 
 		<div class="navbar-account-details-div">
-			<a class="navbar-account-button" [routerLink]="['/change-password']" > 
+			<router-outlet class="navbar-account-button" [routerLink]="['/change-password']" > 
 				<img src="assets/padlock.png" 
 				class="navbar-account-button-icon"/>
 				Change My Password 
-			</a>
+			</router-outlet>
 
-			<a class="navbar-account-button" [routerLink]="['/login']"> 
+			<router-outlet class="navbar-account-button" [routerLink]="['/login']"> 
 				<img src="assets/logout.png" 
 				class="navbar-account-button-icon"/>
 				Logout 
-			</a>
+			</router-outlet>
 		</div>
 	</div>
 </div>

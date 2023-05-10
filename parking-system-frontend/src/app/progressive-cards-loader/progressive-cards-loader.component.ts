@@ -8,7 +8,7 @@ export type CardType = PaymentCardComponent;
 @Component({
   	template: ''
 })
-export class ProgressiveCardsLoaderComponent <CardType> {
+export abstract class ProgressiveCardsLoaderComponent <CardType> {
 	@ViewChild("cardsContainer", { read: ViewContainerRef }) container!: ViewContainerRef;
 	//constuctor
 	constructor(private data: Array<any>, private componentType: Type<CardType>) {}
@@ -39,8 +39,9 @@ export class ProgressiveCardsLoaderComponent <CardType> {
 
 	//on after view init
 	ngAfterViewInit(): void {
-		this.addMultipleCards(this.cardCreateNumber);
-		
+		setTimeout(() => {
+			this.addMultipleCards(this.cardCreateNumber);
+		}, 10);
 	}
 
 	//on scroll create other cards

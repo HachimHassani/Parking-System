@@ -66,6 +66,12 @@
 
 .navbar-filters-order:hover {
     background-color: rgb(227, 227, 227);
+    cursor: pointer;
+}
+
+.navbar-filters-order-active {
+    background-color: rgb(227, 227, 227);
+    cursor: pointer;
 }
 
 .navbar-filters-order-icon {
@@ -93,6 +99,11 @@
 }
 
 .navbar-filters-city:hover {
+    background-color: rgb(222, 222, 222);
+    cursor: pointer;
+}
+
+.navbar-filters-city-active {
     background-color: rgb(222, 222, 222);
     cursor: pointer;
 }

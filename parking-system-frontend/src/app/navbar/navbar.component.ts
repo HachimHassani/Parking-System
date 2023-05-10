@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { NavigationEnd, NavigationStart, Router } from '@angular/router';
-
+import { NavigationEnd,  Router } from '@angular/router';
+import { NavbarAccountComponent } from '../navbar-account/navbar-account.component';
 
 @Component({
 	selector: 'app-navbar',

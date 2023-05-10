@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -15,13 +15,14 @@ import { ParkingCardComponent } from './parking-card/parking-card.component';
 import { ReservationCardComponent } from './reservation-card/reservation-card.component';
 import { PaymentCardComponent } from './payment-card/payment-card.component';
 import { CardComponent } from './card/card.component';
-import { ProgressiveCardsLoaderComponent } from './progressive-cards-loader/progressive-cards-loader.component';
+import { NgxEchartsModule } from 'ngx-echarts';
+import { RouterModule, RouterOutlet } from '@angular/router';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent,
     NavbarAccountComponent,
+    NavbarComponent,
     LoginPageComponent,
     NavbarFiltersComponent,
     ParkingsPageComponent,
@@ -32,11 +33,14 @@ import { ProgressiveCardsLoaderComponent } from './progressive-cards-loader/prog
     ReservationCardComponent,
     PaymentCardComponent,
     CardComponent,
-    ProgressiveCardsLoaderComponent
   ],
   imports: [
+    RouterModule,
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgxEchartsModule.forRoot({
+      echarts: () => import('echarts')
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
