@@ -20,6 +20,7 @@ public class ParkingLot {
 
     private Double parkingFee;
 
+    private String city;
 
     @DBRef(lazy = true)
     private List<ParkingSpace> parkingSpaces;

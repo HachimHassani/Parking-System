@@ -2,6 +2,7 @@ package com.platform.parkingsystem.api.controller;
 
 import com.platform.parkingsystem.api.model.ParkingLot;
 import com.platform.parkingsystem.api.model.ParkingSpace;
+import com.platform.parkingsystem.api.repository.ParkingLotRepository;
 import com.platform.parkingsystem.service.ParkingLotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,13 @@ public class ParkingLotController {
 
     @Autowired
     private ParkingLotService parkingLotService;
+
+    private final ParkingLotRepository parkingLotRepository;
+
+    @Autowired
+    public ParkingLotController(ParkingLotRepository parkingLotRepository) {
+        this.parkingLotRepository = parkingLotRepository;
+    }
 
     @PostMapping
     public ResponseEntity<ParkingLot> createParkingLot(@RequestBody ParkingLot parkingLot) {
@@ -46,4 +54,10 @@ public class ParkingLotController {
         List<ParkingSpace> parkingSpaces = parkingLotService.getParkingSpacesByParkingLotId(id);
         return new ResponseEntity<>(parkingSpaces, HttpStatus.OK);
     }
+
+    @GetMapping(params = "city")
+    public List<ParkingLot> getParkingLotsByCity(@RequestParam("city") String city) {
+        return parkingLotRepository.findByCity(city);
+    }
+
 }
