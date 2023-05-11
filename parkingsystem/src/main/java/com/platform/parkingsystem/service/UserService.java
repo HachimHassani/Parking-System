@@ -1,5 +1,6 @@
 package com.platform.parkingsystem.service;
 
+import com.platform.parkingsystem.api.exceptions.ResourceNotFoundException;
 import com.platform.parkingsystem.api.model.User;
 import com.platform.parkingsystem.api.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,11 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+
 
     public List<User> getAllUsers() {
         return userRepository.findAll();
@@ -48,8 +54,7 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    @Autowired
-    private final PasswordEncoder passwordEncoder;
+
 
     public UserService(UserRepository userRepository, PasswordEncoder pass) {
         this.userRepository = userRepository;
@@ -57,6 +62,9 @@ public class UserService {
     }
 
         public User register(User user) {
+            if (userRepository.existsByEmail(user.getEmail())) {
+                throw new ResourceNotFoundException("Username already exists");
+            }
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             return userRepository.save(user);
         }
