@@ -2,9 +2,11 @@ package com.platform.parkingsystem.api.controller;
 
 import com.platform.parkingsystem.api.exceptions.ResourceNotFoundException;
 import com.platform.parkingsystem.api.model.User;
+import com.platform.parkingsystem.service.UserService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api")
 public class AuthController {
+    @Autowired
+    private UserService userService;
     @PostMapping("/login")
     public CurrentUser login(@Valid @RequestBody LoginForm form, BindingResult bindingResult,
                              HttpServletRequest request) {
@@ -44,6 +48,12 @@ public class AuthController {
     public CurrentUser getCurrentUser(@AuthenticationPrincipal User user) {
         return new CurrentUser(user.getId(), user.getFirstName());
     }
+
+    @PostMapping("/register")
+    public User addUser( @RequestBody User user) {
+        return userService.register(user);
+    }
+
 
     public record CurrentUser(String id, String nickname) {}
     public record LogoutResponse() {}
