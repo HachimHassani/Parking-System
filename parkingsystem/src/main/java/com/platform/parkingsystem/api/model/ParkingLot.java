@@ -6,6 +6,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.security.PrivateKey;
 import java.util.List;
 
 @Document(collection = "parking_lots")
@@ -19,14 +20,21 @@ public class ParkingLot {
 
 
     private Double parkingFee;
+    private int availableSpaces;
 
+    private int capacity;
     private String city;
 
     @DBRef(lazy = true)
     private List<ParkingSpace> parkingSpaces;
+
     public ParkingLot(String name, int capacity, Double parkingFee) {
         this.name = name;
         this.parkingFee = parkingFee;
+    }
+
+    public ParkingLot(){
+
     }
 
     // Getters and Setters
@@ -55,27 +63,76 @@ public class ParkingLot {
 
     // Methods
     public Boolean isSpaceAvailable() {
-        // Implementation
-        return true;
+        // Check if there is at least one available space in the parking lot
+        return availableSpaces > 0;
     }
 
     public Boolean reserveSpace() {
-        // Implementation
-        return true;
+        // Check if there is an available space in the parking lot
+        if (isSpaceAvailable()) {
+
+            availableSpaces--;
+
+            return true;
+        }
+        return false;
     }
 
     public Boolean grantAccess() {
-        // Implementation
-        return true;
+        // Check if there are any reserved spaces in the parking lot
+        if (isSpaceAvailable()) {
+            // Decrement the availale spaces count
+            availableSpaces--;
+            return true;
+        }
+        return false;
     }
 
     public Boolean releaseSpace() {
-        // Implementation
-        return true;
+        // Check if there are any occupied spaces in the parking lot
+        if (capacity > availableSpaces) {
+            // increment the availableSpaces count
+
+            availableSpaces++;
+            return true;
+        }
+        return false;
     }
 
     public Boolean updateOccupancy() {
-        // Implementation
+
         return true;
+    }
+
+    public List<ParkingSpace> getParkingSpaces() {
+        return parkingSpaces;
+    }
+
+    public void setParkingSpaces(List<ParkingSpace> parkingSpaces) {
+        this.parkingSpaces = parkingSpaces;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+
+    public void setAvailableSpaces(int availableSpaces) {
+        this.availableSpaces = availableSpaces;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public int getAvailableSpaces() {
+        return availableSpaces;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public String getCity() {
+        return city;
     }
 }

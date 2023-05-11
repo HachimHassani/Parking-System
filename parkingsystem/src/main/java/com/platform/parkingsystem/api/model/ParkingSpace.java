@@ -1,26 +1,28 @@
 package com.platform.parkingsystem.api.model;
 
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "parkingspaces")
 public class ParkingSpace {
-    private Long id;
+    private String id;
     private String spaceNumber;
-    private Boolean available;
+    private Boolean available = true;
 
     private User user;
 
-    private String parkingLotId;
+    @DBRef(lazy = true)
+    private ParkingLot parkingLot;
     // getters and setters
     public ParkingSpace(){
 
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
@@ -32,12 +34,12 @@ public class ParkingSpace {
         return available;
     }
 
-    public void setParkingLotId(String parkingLotId) {
-        this.parkingLotId = parkingLotId;
+    public ParkingLot getParkingLot() {
+        return parkingLot;
     }
 
-    public String getParkingLotId() {
-        return parkingLotId;
+    public void setParkingLot(ParkingLot parkingLot) {
+        this.parkingLot = parkingLot;
     }
 
     public void setSpaceNumber(String spaceNumber) {

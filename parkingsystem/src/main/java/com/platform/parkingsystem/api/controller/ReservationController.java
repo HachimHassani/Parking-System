@@ -1,12 +1,18 @@
 package com.platform.parkingsystem.api.controller;
 
+import com.platform.parkingsystem.api.model.ParkingLot;
+import com.platform.parkingsystem.api.model.ParkingSpace;
 import com.platform.parkingsystem.api.model.Reservation;
+import com.platform.parkingsystem.api.model.User;
+import com.platform.parkingsystem.service.ParkingLotService;
 import com.platform.parkingsystem.service.ReservationService;
+import com.platform.parkingsystem.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -16,10 +22,43 @@ public class ReservationController {
     @Autowired
     private ReservationService reservationService;
 
-    @PostMapping
-    public ResponseEntity<Reservation> createReservation(@RequestBody Reservation reservation) {
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private ParkingLotService parkingLotService;
+
+    @PostMapping("")
+    public ResponseEntity<Reservation> createReservation(
+            @RequestBody Reservation reservation,
+            @RequestParam("user_id") String userId,
+            @RequestParam("parking_lot_id") String parkinglotId,
+            @RequestParam("from") String from,
+            @RequestParam("to") String to) {
+
+
+        LocalDateTime start = LocalDateTime.parse(from);
+        LocalDateTime end = LocalDateTime.parse(to);
+
+
+        User user = userService.getUserById(userId);
+
+        ParkingLot parkingLot = parkingLotService.getParkingLotById(parkinglotId);
+
+        // Check if the time slot is available
+        if (!reservationService.isTimeSlotAvailable(parkingLot, start, end)) {
+            return ResponseEntity.badRequest().body(null);
+        }
+        ParkingSpace parkingSpace = reservationService.chooseparkingspace(parkingLot, start, end);
+        // Create the reservation
+        reservation.setUser(user);
+        reservation.setParkingSpace(parkingSpace);
+        reservation.setFrom(start);
+        reservation.setTo(end);
+        reservation.setActive(true);
         Reservation createdReservation = reservationService.createReservation(reservation);
-        return ResponseEntity.created(URI.create("/api/reservations/" + createdReservation.getId())).body(createdReservation);
+
+        return ResponseEntity.ok(createdReservation);
     }
 
     @GetMapping()

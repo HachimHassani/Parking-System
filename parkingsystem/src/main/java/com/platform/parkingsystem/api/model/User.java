@@ -31,6 +31,9 @@ public class User  implements UserDetails {
 
     @DBRef(lazy = true)
     private List<ParkingLot> favourites;
+
+    @DBRef(lazy = true)
+    private List<Reservation> reservations;
     // Constructor
     public User(String firstName, String lastName, String email, String phone, String licensePlate, String password) {
 
@@ -46,6 +49,16 @@ public class User  implements UserDetails {
 
     }
     // Getters and Setters
+
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
+    }
+
     public String getFirstName() {
         return firstName;
     }
@@ -105,6 +118,13 @@ public class User  implements UserDetails {
         return authorities;
     }
 
+    public List<Reservation> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(List<Reservation> reservations) {
+        this.reservations = reservations;
+    }
 
     public void setRoles(List<String> roles) {
         this.roles = roles;
@@ -143,5 +163,7 @@ public class User  implements UserDetails {
     public List<ParkingLot> getFavourites() {
         return favourites;
     }
+
+
 
 }

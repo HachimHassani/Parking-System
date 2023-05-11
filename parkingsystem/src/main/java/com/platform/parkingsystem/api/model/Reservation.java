@@ -83,4 +83,19 @@ public class Reservation {
         this.active = active;
     }
 
+    public void usesParkingSpace(){
+        this.parkingSpace.setAvailable(false);
+    }
+
+    public void freesParkingSpace(){
+        this.parkingSpace.setAvailable(true);
+    }
+
+    public void setParkingSpace(ParkingSpace parkingSpace) {
+        this.parkingSpace = parkingSpace;
+    }
+
+    public ParkingSpace getParkingSpace() {
+        return parkingSpace;
+    }
 }
