@@ -16,7 +16,7 @@ public interface UserRepository extends MongoRepository<User, String> {
 
     public User findByUsername(String name);
 
-    public User getReservations();
+
 
 
 }

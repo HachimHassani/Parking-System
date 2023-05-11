@@ -22,7 +22,7 @@ public class ReservationController {
     @Autowired
     private ReservationService reservationService;
 
-    @Autowired
+
     private UserService userService;
 
     @Autowired

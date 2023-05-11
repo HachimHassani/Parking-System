@@ -22,7 +22,7 @@ public class ReservationService {
     @Autowired
     private ReservationRepository reservationRepository;
 
-    @Autowired
+
     private UserRepository  userRepository;
     public Reservation createReservation(Reservation reservation) {
         return reservationRepository.save(reservation);
