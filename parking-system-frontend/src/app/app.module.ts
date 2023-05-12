@@ -1,5 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,7 +18,11 @@ import { PaymentCardComponent } from './payment-card/payment-card.component';
 import { CardComponent } from './card/card.component';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { RouterModule, RouterOutlet } from '@angular/router';
-
+import { ParkingInfoComponent } from './parking-info/parking-info.component';
+import { ReservationAddComponent } from './reservation-add/reservation-add.component';
+import { NotificationComponent } from './notification/notification.component';
+import { LoadingComponent } from './loading/loading.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,10 +38,16 @@ import { RouterModule, RouterOutlet } from '@angular/router';
     ReservationCardComponent,
     PaymentCardComponent,
     CardComponent,
+    ParkingInfoComponent,
+    ReservationAddComponent,
+    NotificationComponent,
+    LoadingComponent,
+    PageNotFoundComponent,
   ],
   imports: [
     RouterModule,
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     NgxEchartsModule.forRoot({
       echarts: () => import('echarts')

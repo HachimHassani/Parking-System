@@ -18,4 +18,9 @@ describe('LoginPageComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('expect to find notification container'), () => {
+    expect(component.notificationContainer).toBeDefined();
+  
+  }
 });

@@ -13,5 +13,8 @@ export class ReservationsPageComponent extends ProgressiveCardsLoaderComponent<R
 		super([], ReservationCardComponent);
 	}
 
+	override ngAfterViewInit(): void {
+		
+	}
 
 }

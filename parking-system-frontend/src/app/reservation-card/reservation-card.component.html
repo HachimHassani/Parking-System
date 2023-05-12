@@ -2,13 +2,17 @@
         'card-visible': visible
     }">
     <div class="reservation-card-main">
+        <h1 class="reservation-card-place">
+            {{ parkingNumber | number: '2.'}}
+        </h1>
+
         <div class="reservation-parking-info">
             <h2> Parking's name </h2>
             <p> Marrakech </p>
         </div>
 
         <div class="reservation-time">
-            <h1> 16h32min21s </h1>
+            <h1> 16h 32min 21s </h1>
             <h3> Before Finished </h3>
         </div>
     </div>

@@ -8,6 +8,7 @@ import { NavbarAccountComponent } from '../navbar-account/navbar-account.compone
 	styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit{
+	//visibility
 	visible=true;
 	titleHovered = false;
 
@@ -18,7 +19,16 @@ export class NavbarComponent implements OnInit{
 			if (event instanceof NavigationEnd) {
 				this.visible = event.url != '/login';
 			}
-			
+		});
+	}
+
+	onSearchBarEnter(search: string) {
+		this.router.navigate(['/'], {
+			queryParamsHandling: 'merge',
+			queryParams: {
+				'search': search
+			},
+			skipLocationChange: false
 		});
 	}
 	

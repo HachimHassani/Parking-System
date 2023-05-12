@@ -1,0 +1,18 @@
+<div class="loading-container "
+[ngClass]="{
+    'loading-container-visible': isLoading
+}">
+
+    <div class="loading-icon-container "
+    [ngClass]="{
+        'loading-icon-container-visible': isLoading
+    }">
+        <img class="loading-icon" 
+        [ngClass]="{
+            'loading-icon-visible': isLoading
+        }"
+        src="assets/loading.svg" />
+
+    </div>
+
+</div>

@@ -73,6 +73,15 @@
     gap: 16px;
 }
 
+.btn:disabled {
+    opacity: 50%;
+}
+
+
+.btn:disabled:hover{
+    cursor:default;
+}
+
 
 .login-button-negative {
     border: 3px solid black;

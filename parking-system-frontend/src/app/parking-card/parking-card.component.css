@@ -20,6 +20,41 @@
     opacity: 80%;
 }
 
+.parking-card-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+    gap: 32px;
+}
+
+.parking-card-collection {
+    max-width: 52px;
+    width: 25%;
+}
+
+.parking-card-collection:hover {
+    cursor: pointer;
+}
+
+.parking-card-collection-click {
+    animation-name: collection-click-animation;
+    animation-duration: 0.2s;
+    animation-iteration-count: 1;
+}
+
+@keyframes collection-click-animation {
+    0%{
+        transform: scale(0.8);
+    }
+    20%{
+        transform: scale(1.2);
+    }
+    100%{
+        transform: scale(1);
+    }
+}
+
 .parking-card-buttons {
     
     /*min-width: 250px;*/

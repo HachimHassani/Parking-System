@@ -1,6 +1,8 @@
-describe('My First Test', () => {
-  it('Visits the initial project page', () => {
-    cy.visit('/')
-    cy.contains('app is running!')
-  })
+import {Chance} from 'chance';
+
+describe('Navigation Test', () => {
+	it('Visits the initial project page', () => {
+		cy.visit('/');
+		cy.contains('arking System');
+	});
 })

@@ -1,14 +1,14 @@
-import { Component, ComponentRef, HostListener, Type, ViewChild, ViewContainerRef } from '@angular/core';
+import { AfterViewInit, Component, ComponentRef, HostListener, Type, ViewChild, ViewContainerRef } from '@angular/core';
 import { CardComponent } from '../card/card.component';
 import { take } from 'rxjs';
 import { PaymentCardComponent } from '../payment-card/payment-card.component';
 
-export type CardType = PaymentCardComponent;
+export type CardType = CardComponent;
 
 @Component({
   	template: ''
 })
-export abstract class ProgressiveCardsLoaderComponent <CardType> {
+export abstract class ProgressiveCardsLoaderComponent <CardType> implements AfterViewInit{
 	@ViewChild("cardsContainer", { read: ViewContainerRef }) container!: ViewContainerRef;
 	//constuctor
 	constructor(private data: Array<any>, private componentType: Type<CardType>) {}
@@ -26,23 +26,31 @@ export abstract class ProgressiveCardsLoaderComponent <CardType> {
 	}
 
 	//create multiple cards
-	addMultipleCards(count: number) {
+	async addMultipleCards(count: number) {
+		//create the cards
 		for (let i = 0; i < count; i++) {
 			let card = this.addCard();
-			//show
-			setTimeout(() => {
-				(card.instance as CardComponent).show();
-			}, (i + 1) * 100);
+		}
+		//animate the cards
+		//wait for 100 ms
+		for (let i = 0; i < count; i++) {
+			let card = this.cards[i + this.cards.length - count];
+			await new Promise(r => setTimeout(r, 100));
+			(card.instance as CardComponent).show();
 		}
 	}
 
-
-	//on after view init
-	ngAfterViewInit(): void {
-		setTimeout(() => {
-			this.addMultipleCards(this.cardCreateNumber);
-		}, 10);
+	//delete cards
+	deleteAllCards() {
+		this.cards.forEach(card => {
+			card.destroy();
+		});
 	}
+
+	ngAfterViewInit(): void {
+		 
+	}
+
 
 	//on scroll create other cards
 	@HostListener('window:scroll', ['$event'])
@@ -52,7 +60,7 @@ export abstract class ProgressiveCardsLoaderComponent <CardType> {
 
 		let limit = document.body.offsetHeight - window.innerHeight;
 		if (window.scrollY >= limit) {
-			this.addMultipleCards(10);
+			this.addMultipleCards(1);
 		}
 	}
 }

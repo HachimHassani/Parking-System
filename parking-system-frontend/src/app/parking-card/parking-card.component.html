@@ -9,8 +9,17 @@
         <a class="parking-card-location"> Marrakech </a>
     </div>
 
-    <div class="parking-card-buttons">
-        <button class="parking-card-more"> About </button>
-        <button class="btn btn-positive parking-card-buy"> Purchase </button>
+    <div class="parking-card-right">
+        <img class="parking-card-collection "
+        [ngClass]="{
+            'parking-card-collection-click': isCollectionButtonAnimated
+        }"
+        (click)="onCollectionClick()"
+        [src]="inCollection? 'assets/heart.png': 'assets/heart-empty.png'"/>
+        <div class="parking-card-buttons">
+            <button class="parking-card-more"> About </button>
+            <button class="btn btn-positive parking-card-buy"> Purchase </button>
+        </div>
     </div>
+    
 </div>

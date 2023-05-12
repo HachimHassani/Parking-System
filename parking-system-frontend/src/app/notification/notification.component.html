@@ -1,0 +1,13 @@
+
+<div class="notification-container">
+
+    <div class="notification "
+    [ngClass]="{
+        'notification-error ': type == 'error',
+        'notification-warning ': type == 'warning',
+        'notification-correct ': type == 'correct',
+        'notification-visible ': visible
+    }">
+        {{ message }}
+    </div>
+</div>

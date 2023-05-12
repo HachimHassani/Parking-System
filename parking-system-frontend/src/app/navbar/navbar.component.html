@@ -14,7 +14,11 @@
         </div>
     
         <div class="navbar-search-bar-container"> 
-            <input class="navbar-search-bar" type="text" placeholder="search for parking lots"/>
+            <input class="navbar-search-bar" 
+            type="text" 
+            placeholder="search for parking lots"
+            #searchbar 
+            (keyup.Enter)="onSearchBarEnter(searchbar.value); searchbar.value = '';"/>
         </div>
         
         <div class="navbar-account-container">
