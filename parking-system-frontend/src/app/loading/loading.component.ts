@@ -6,8 +6,8 @@ import { Component } from '@angular/core';
 	styleUrls: ['./loading.component.css']
 })
 export class LoadingComponent {
-	isLoading = false;
-
+	isLoading=false;
+	
 	//show /hide
 	show() {
 		this.isLoading = true;

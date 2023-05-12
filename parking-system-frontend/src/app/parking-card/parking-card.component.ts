@@ -1,6 +1,14 @@
 import { Component } from '@angular/core';
 import { CardComponent } from '../card/card.component';
 
+export interface ParkingCardData {
+	id: string,
+	name: string,
+	city: string,
+	inCollection: boolean, 
+}
+
+
 @Component({
 	selector: 'app-parking-card',
 	templateUrl: './parking-card.component.html',
@@ -8,7 +16,13 @@ import { CardComponent } from '../card/card.component';
 })
 export class ParkingCardComponent  extends CardComponent{
 	//data
-	inCollection = false;
+	data: ParkingCardData = {
+		id: "parkingid",
+		name: "Parking's name",
+		city: "Parking's city",
+		inCollection: false
+	}
+	//collection
 	isCollectionButtonAnimated = false;
 
 	//click animation
@@ -20,7 +34,7 @@ export class ParkingCardComponent  extends CardComponent{
 
 	//on collection clikc
 	onCollectionClick() {
-		this.inCollection = !this.inCollection;
+		this.data.inCollection = !this.data.inCollection;
 		this.collectionClickAninmate();
 	}
 

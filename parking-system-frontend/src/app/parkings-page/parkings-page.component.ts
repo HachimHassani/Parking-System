@@ -34,15 +34,16 @@ export class ParkingsPageComponent extends ProgressiveCardsLoaderComponent<Parki
 
 	//fetch parking data
 	async fetchParkingData() {
+		await new Promise(r => setTimeout(r, 0));
 		//simulate loading time
 		this.loadingComponent.show();
 		//fetch data from api
-		this.http.get('api/parking-lots/645d7a9dcbf6044e7e3ffac3').subscribe(res => {
+		/*this.http.get('api/parking-lots/645d7a9dcbf6044e7e3ffac3').subscribe(res => {
 			console.log(res);
-			this.loadingComponent.hide();
-			this.addMultipleCards(10);
-		});
-		//await new Promise(r => setTimeout(r, 2000));
+		});*/
+		await new Promise(r => setTimeout(r, 2000));
+		this.loadingComponent.hide();
+		this.addMultipleCards(10);
 		//show data
 	}
 

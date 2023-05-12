@@ -1,0 +1,32 @@
+
+.parking-info-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.parking-places {
+    
+    width: 320px;
+    height: 320px;
+    
+}
+
+.parking-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.parking-info p {
+    display: flex;
+    align-items: center;
+    font-size: larger;
+    gap: 8px;
+}
+
+.parking-info p img {
+    width: 32px;
+}
+
+.button-reserve {
+    width: 100%;
+}

@@ -23,6 +23,7 @@ import { ReservationAddComponent } from './reservation-add/reservation-add.compo
 import { NotificationComponent } from './notification/notification.component';
 import { LoadingComponent } from './loading/loading.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { ChartComponent, NgApexchartsModule } from 'ng-apexcharts';
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,6 +44,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     NotificationComponent,
     LoadingComponent,
     PageNotFoundComponent,
+    
   ],
   imports: [
     RouterModule,
@@ -51,7 +53,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     AppRoutingModule,
     NgxEchartsModule.forRoot({
       echarts: () => import('echarts')
-    })
+    }),
+    NgApexchartsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

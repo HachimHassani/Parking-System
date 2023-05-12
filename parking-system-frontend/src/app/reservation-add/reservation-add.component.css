@@ -1,0 +1,63 @@
+.reservation-header {
+    display: flex;
+    align-items: center;
+}
+
+.price {
+    font-size: xxx-large;
+}
+
+.parking-info {
+    flex: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.parking-info a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: larger;
+}
+
+.parking-info a img {
+    width: 32px;
+}
+
+.button-cancel {
+    color: black;
+    border: 2px solid black;
+    background-color: white;
+}
+
+.button-cancel:hover {
+    cursor: pointer;
+    color: rgb(64, 64, 64);
+    border-color: rgb(64, 64, 64);
+}
+
+.reservation-form {
+    margin-top: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.reservation-from-input {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    font-size: x-large;
+}
+
+
+.reservation-from-input input {
+    font-size: x-large;
+    padding: 8px;
+}
+
+.reservation-form-buttons {
+    display: flex;
+    gap: 32px;
+}
