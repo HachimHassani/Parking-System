@@ -1,12 +1,15 @@
 package com.platform.parkingsystem.api.model;
 
 
+import com.platform.parkingsystem.api.repository.ReservationRepository;
 import jakarta.validation.constraints.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.security.PrivateKey;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Document(collection = "parking_lots")
@@ -28,9 +31,12 @@ public class ParkingLot {
     @DBRef(lazy = true)
     private List<ParkingSpace> parkingSpaces;
 
-    public ParkingLot(String name, int capacity, Double parkingFee) {
+    public ParkingLot(String name, int capacity, Double parkingFee, String city) {
         this.name = name;
         this.parkingFee = parkingFee;
+        this.capacity = capacity;
+        this.availableSpaces = capacity;
+        this.city = city;
     }
 
     public ParkingLot(){
@@ -135,4 +141,7 @@ public class ParkingLot {
     public String getCity() {
         return city;
     }
+
+
+
 }

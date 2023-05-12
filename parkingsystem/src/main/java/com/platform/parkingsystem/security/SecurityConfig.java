@@ -39,33 +39,16 @@ public class SecurityConfig  {
 
 
 
-        @Bean
-        public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-            // @formatter:off
-            http
-                    .authorizeHttpRequests((authorize) -> authorize
-                            .anyRequest().authenticated()
-                    )
-                    .formLogin(withDefaults())
-                    .sessionManagement((sessions) -> sessions
-                            .sessionConcurrency((concurrency) -> concurrency
-                                    .maximumSessions(1)
-                                    .expiredUrl("/login?expired")
-                            )
-                    );
-            // @formatter:on
-            return http.build();
-        }
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
+        http.authorizeRequests()
+                .anyRequest().permitAll()
+                .and()
+                .csrf().disable();
 
-
-
-
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
+        return http.build();
     }
-
 
 
 }
