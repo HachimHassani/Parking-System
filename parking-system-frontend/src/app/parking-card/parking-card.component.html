@@ -1,0 +1,26 @@
+<div class="card parking-card "
+    [ngClass]="{
+        'card-visible': visible
+    }">
+    <img class="parking-card-icon" src="assets/parking.png" />
+
+    <div class="parking-card-info">
+        <h2 class="parking-card-name"> {{ data.name }} </h2>
+        <a class="parking-card-location"> {{ data.city }} </a>
+    </div>
+
+    <div class="parking-card-right">
+        <img class="parking-card-collection "
+        [ngClass]="{
+            'parking-card-collection-click': isCollectionButtonAnimated
+        }"
+        name="addCollection"
+        (click)="onCollectionClick()"
+        [src]="data.inCollection? 'assets/heart.png':'assets/heart-empty.png'"/>
+        <div class="parking-card-buttons">
+            <button class="parking-card-more" [routerLink]="['/parking/' + data.id]" name="about"> About </button>
+            <button class="btn btn-positive parking-card-buy" [routerLink]="['/reservations/add/' + data.id]" name="purchase"> Purchase </button>
+        </div>
+    </div>
+    
+</div>

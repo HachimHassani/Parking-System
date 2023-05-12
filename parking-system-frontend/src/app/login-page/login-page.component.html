@@ -1,0 +1,75 @@
+<div class="login-container">
+
+    <app-loading></app-loading>
+
+    <div class="login" #notificationContainer>
+        <h1 class="login-title">
+            <img class="login-title-icon" src="assets/parking-icon.svg"/>
+            arking System
+        </h1>
+
+        <!--Login form-->
+        <form class="login-forum" *ngIf="isLogin"> 
+            <div class="login-forum-div">
+                <label class="login-forum-label"> Email </label>
+                <input #loginEmail 
+                (keypress)="loginData.email=loginEmail.value" 
+                (blur)="loginData.email=loginEmail.value"
+                class="login-forum-input" name="loginEmail" type="email" placeholder="something@example.com"/>
+            </div>
+
+            <div class="login-forum-div">
+                <label class="login-forum-label"> Password </label>
+                <input #loginPassword 
+                (keypress)="loginData.password=loginPassword.value" 
+                (blur)="loginData.password=loginPassword.value"
+                class="login-forum-input" name="loginPassword" type="password" placeholder="*********"/>
+            </div>
+        </form>
+
+        <!--Signin forum-->
+        <form class="login-forum" *ngIf="!isLogin">
+            <div class="login-forum-div">
+                <label class="login-forum-label"> Email </label>
+                <input #signinEmail
+                (keypress)="signinData.email=signinEmail.value" 
+                (blur)="signinData.email=signinEmail.value"
+                class="login-forum-input" name="signinEmail" type="text" placeholder="something@example.com" />
+            </div>
+
+            <div class="login-forum-div">
+                <label class="login-forum-label"> Password </label>
+                <input #signinPassword
+                (keypress)="signinData.password=signinPassword.value" 
+                (blur)="signinData.password=signinPassword.value"
+                class="login-forum-input" name="signinPassword" type="password" placeholder="*********" />
+            </div>
+        
+            <div class="login-forum-div">
+                <label class="login-forum-label"> Confirm Password </label>
+                <input #signinConfirmPassword
+                (keypress)="signinData.confirmPassword=signinConfirmPassword.value" 
+                (blur)="signinData.confirmPassword=signinConfirmPassword.value"
+                class="login-forum-input" name="signinConfirmPassword" type="password" placeholder="*********" />
+            </div>
+        </form>
+
+        <!--buttons-->
+        <div class="login-buttons">
+            <button class="btn btn-positive"
+            name="submit"
+            [disabled]="isLoading"
+            (click)="onPositiveClicked()"> 
+                {{ isLogin? 'Login': 'Sign in'}} 
+            </button>
+            
+            <button class="btn login-button-negative" 
+            name="switch"
+            [disabled]="isLoading"
+            (click)="switchLoginMode()"> 
+                {{ !isLogin? 'Login': 'Sign in'}} 
+            </button>
+        </div>
+    </div>
+
+</div>

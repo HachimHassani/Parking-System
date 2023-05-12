@@ -1,0 +1,25 @@
+<div class="card payment-card" [ngClass]="{
+        'card-visible': visible
+    }">
+   
+    <div class="payment-card-reservation">
+        
+        <h2> Parking's name </h2>
+        <p> Marrakech </p>
+        <p> From 16:05:10 25/02/2002 </p>
+        <p> To 16:50:10 26/02/2002 </p>
+
+    </div>
+
+    <div class="payment-card-info">
+        <h1 class="payment-card-price">
+            -{{ 59.9911 | number}} dh
+        </h1>
+        <p> At 12:25:00 21/02/2002 </p>
+        <button class="btn payment-card-delete"
+        (click)="onDeleteClicked()">
+            Delete
+        </button>
+    </div>
+
+</div>
