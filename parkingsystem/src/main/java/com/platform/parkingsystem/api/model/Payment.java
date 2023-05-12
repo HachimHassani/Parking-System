@@ -1,6 +1,7 @@
 package com.platform.parkingsystem.api.model;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
@@ -9,7 +10,9 @@ import java.time.LocalDateTime;
 public class Payment {
     @Id
     private String id;
-    private String reservationId;
+
+    @DBRef(lazy = true)
+    private Reservation reservation;
     private double amount;
     private LocalDateTime paymentDate;
     private boolean complete;
