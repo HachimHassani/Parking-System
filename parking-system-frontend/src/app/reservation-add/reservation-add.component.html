@@ -1,0 +1,64 @@
+<div class="cards-container">
+    <app-loading></app-loading>
+
+
+    <div class="cards-list" *ngIf="!isLoading">
+        
+        <h1>
+            New Reservation
+        </h1>
+
+        <div class="reservation-header">
+            
+            <div class="parking-info">
+                <h2> {{ name }} </h2>
+                <a>
+                    <img src="assets/location.png">
+                    {{ city }}
+                </a>
+                
+                <a>
+                    <img src="assets/coins.png">
+                    {{ cost | number: '2.2'}} Dh / hour
+                </a>
+                
+                <a>
+                    <img src="assets/parking-sign.png">
+                    {{ places }} places
+                </a>
+            </div>
+
+            <h1 class="price" name="price">
+                {{ getPrice() | number: '2.2'}} DH
+            </h1>
+            
+        </div>
+
+        <!--apx-chart 
+            [series]="availableTimelineOptions.series"
+            [chart]="availableTimelineOptions.chart"
+            [plotOptions]="availableTimelineOptions.plotOptions"
+            [xaxis]="availableTimelineOptions.xaxis">
+            
+        </apx-chart-->
+
+        <form class="reservation-form">
+            <div class="reservation-from-input">
+                <label> From </label>
+                <input #reservationFrom (input)="onFromInputChange(reservationFrom.valueAsNumber)" type="datetime-local" name="reservationFrom"/>
+            </div>
+
+            <div class="reservation-from-input">
+                <label> To </label>
+                <input #reservationTo (input)="onToInputChange(reservationTo.valueAsNumber)" type="datetime-local" [min]="reservationFrom.value" name="reservationTo"/>
+            </div>
+
+            <div class="reservation-form-buttons">
+                <button class="btn btn-positive" [routerLink]="['/']" name="order"> Order </button>
+                <button class="btn button-cancel" [routerLink]="['/']"> Cancel </button>
+            </div>
+
+
+        </form>
+    </div>
+</div>

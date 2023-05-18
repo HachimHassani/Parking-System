@@ -1,0 +1,83 @@
+
+.parking-card-icon {
+    height: 100px;
+}
+
+.parking-card-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    flex: auto;
+}
+
+.parking-card-name {
+    margin-bottom: 8px;
+}
+
+.parking-card-location {
+    font-size: larger;
+    opacity: 80%;
+}
+
+.parking-card-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+    gap: 32px;
+}
+
+.parking-card-collection {
+    max-width: 52px;
+    width: 25%;
+}
+
+.parking-card-collection:hover {
+    cursor: pointer;
+}
+
+.parking-card-collection-click {
+    animation-name: collection-click-animation;
+    animation-duration: 0.2s;
+    animation-iteration-count: 1;
+}
+
+@keyframes collection-click-animation {
+    0%{
+        transform: scale(0.8);
+    }
+    20%{
+        transform: scale(1.2);
+    }
+    100%{
+        transform: scale(1);
+    }
+}
+
+.parking-card-buttons {
+    
+    /*min-width: 250px;*/
+    display: flex;
+    align-items: flex-end;
+    gap: 16px;
+    
+}
+
+.parking-card-more {
+    padding: 4px;
+    flex: 1;
+    background-color: white;
+    border: none;
+    font-size: x-large;
+}
+
+.parking-card-more:hover {
+    cursor: pointer;
+    text-decoration:underline;
+}
+
+.parking-card-buy {
+    flex: 1;
+    font-size: x-large;
+}

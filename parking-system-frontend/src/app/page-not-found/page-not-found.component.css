@@ -1,0 +1,34 @@
+.page-not-found {
+    z-index: 1000;
+
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+
+    background-color: rgba(0, 0, 0, 0.514);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    color: white;
+
+    gap: 32px;
+}
+
+.page-not-found img {
+    width: 100%;
+    max-width: 400px;
+
+}
+
+.page-not-found h1 {
+    font-size: xxx-large;
+}
+
+.button-go-home button {
+    padding: 16px;
+}

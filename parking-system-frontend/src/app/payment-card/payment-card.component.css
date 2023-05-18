@@ -1,0 +1,38 @@
+.payment-card {
+    padding: 16px;
+    width: auto;
+}
+
+.payment-card-reservation {
+    flex: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.payment-card-reservation p {
+    margin: 8px;
+    font-size: large;
+}
+
+.payment-card-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.payment-card-price {
+    color: rgb(255, 0, 0);
+}
+
+.payment-card-delete {
+    background-color: white;
+    border: 2px solid red;
+    color: red;
+    font-size: x-large;
+}
+
+.payment-card-delete:hover {
+    cursor: pointer;
+    background-color: red;
+    color: white;
+}

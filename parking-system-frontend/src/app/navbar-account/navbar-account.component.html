@@ -1,0 +1,47 @@
+<div class="navbar-account">
+	<img class="navbar-account-icon " [ngClass]="{
+		'navbar-account-icon-active': active
+	}"
+	src="assets/user.png" 
+	(click)="onIconClicked()" />
+
+
+	<div class="navbar-account-details " [ngClass]="{
+		'navbar-account-details-active': active
+	}">
+
+		<div class="navbar-account-details-div">
+			<img 
+			class="navbar-account-details-icon"
+			src="assets/user.png"/>
+			<h2> username </h2>
+		</div>
+
+		<div class="navbar-account-details-div">
+			<a class="navbar-account-button" [routerLink]="['/reservations']">
+				<img src="assets/reservation.png" class="navbar-account-button-icon" />
+				My Reservations
+			</a>
+
+			<a class="navbar-account-button" [routerLink]="['/payments']">
+				<img src="assets/credit-card.png" class="navbar-account-button-icon" />
+				My Payments
+			</a>
+		</div>
+
+		<div class="navbar-account-details-div">
+			<a class="navbar-account-button" [routerLink]="['/change-password']" > 
+				<img src="assets/padlock.png" 
+				class="navbar-account-button-icon"/>
+				Change My Password 
+			</a>
+
+			<a class="navbar-account-button" [routerLink]="['/login']"> 
+				<img src="assets/logout.png" 
+				class="navbar-account-button-icon"/>
+				Logout 
+			</a>
+		</div>
+	</div>
+</div>
+

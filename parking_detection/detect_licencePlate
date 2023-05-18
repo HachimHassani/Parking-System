@@ -57,4 +57,3 @@ cv2.imshow('test',opening)
 if(cv2.waitKey(0)==ord('q')):
     cv2.destroyAllWindows()
     
-

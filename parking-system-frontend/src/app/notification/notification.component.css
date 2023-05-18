@@ -1,0 +1,46 @@
+.notification-container {
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    /*position*/
+    position: fixed;
+    top: 0px;
+    left: 0px;
+
+    /*size*/
+    width: 100%;
+}
+
+.notification {
+    border-radius: 8px;
+    padding: 16px;
+    margin: 8px;
+    opacity: 0%;
+    transform: translateY(-100%);
+    transition: all 1.0s ease-in;
+    font-size: larger;
+}
+
+.notification-visible {
+    transform: translate(0%);
+    transition: all 0.4s ease-out;
+    opacity: 100%;
+}
+
+.notification-error {
+    background-color: rgb(255, 129, 129);
+    color: rgb(168, 0, 0);
+    border: 1px solid rgb(168, 0, 0);
+}
+
+.notification-warning {
+    background-color: rgb(255, 232, 129);
+    color: rgb(168, 109, 0);
+    border: 1px solid rgb(168, 109, 0);
+}
+
+.notification-correct {
+    background-color: rgb(203, 255, 129);
+    color: rgb(0, 168, 90);
+    border: 1px solid rgb(0, 168, 90);
+}

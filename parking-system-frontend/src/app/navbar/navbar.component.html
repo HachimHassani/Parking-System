@@ -1,0 +1,29 @@
+<nav class="navbar "  [ngClass]="{
+        'navbar-visible': visible
+    }">
+    <div class="navbar-container"> 
+        <div class="navbar-title-container" [routerLink]="['/']" 
+            (mouseenter)="titleHovered = true"
+            (mouseleave)="titleHovered = false">
+            <img class="navbar-icon " 
+            [ngClass]="{
+                'navbar-icon-hover': titleHovered
+            }"
+            src="assets/parking-icon.svg"/>
+            <h1 class="navbar-title"> arking System </h1>
+        </div>
+    
+        <div class="navbar-search-bar-container"> 
+            <input class="navbar-search-bar" 
+            type="text" 
+            placeholder="search for parking lots"
+            #searchbar 
+            (keyup.Enter)="onSearchBarEnter(searchbar.value); searchbar.value = '';"/>
+        </div>
+        
+        <div class="navbar-account-container">
+            <app-navbar-account/>
+        </div>
+    </div>
+</nav>
+
