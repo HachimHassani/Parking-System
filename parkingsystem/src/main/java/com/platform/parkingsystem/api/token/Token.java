@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 public class Token {
 
   @Id
-  private Integer id;
+  private String id;
 
   @DBRef
   private User user;
