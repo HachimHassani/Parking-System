@@ -1,13 +1,22 @@
-FROM node:16.14 as build
-WORKDIR /app
+#import ubuntu 
+FROM ubuntu
 
-RUN npm install -g @angular/cli
+#install dependecies
+RUN apt-get update
+RUN apt-get -y install nginx
+RUN apt-get -y install openjdk-17-jre
 
-COPY ./parking-system-frontend/package.json .
-RUN npm install
+#config nginx
+COPY default.conf /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/nginx.conf
+COPY parking-system-frontend/dist/parking-system-frontend /usr/share/nginx/html
 
-COPY parking-system-frontend .
-RUN ng build
+#get run file
+COPY run.sh .
+RUN chmod +x run.sh
 
-FROM nginx as runtime
-COPY --from=build /app/dist/parking-system-frontend /usr/share/nginx/html
+#run api
+ARG JAR_FILE=parkingsystem/target/*.jar
+ADD ${JAR_FILE} app.jar
+#RUN java -jar app.jar
+ENTRYPOINT ["./run.sh"]
