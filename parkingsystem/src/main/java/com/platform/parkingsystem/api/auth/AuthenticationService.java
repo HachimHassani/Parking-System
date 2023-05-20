@@ -10,6 +10,7 @@ import com.platform.parkingsystem.api.repository.UserRepository;
 import com.platform.parkingsystem.api.token.Token;
 import com.platform.parkingsystem.api.token.TokenRepository;
 import com.platform.parkingsystem.api.token.TokenType;
+import com.platform.parkingsystem.api.user.Role;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +38,7 @@ public class AuthenticationService {
         .email(request.getEmail())
         .password(passwordEncoder.encode(request.getPassword()))
         .licensePlate(request.getLicenseplate())
-        .roles(request.getRole())
+        .role(Role.USER)
         .build();
     var savedUser = repository.save(user);
     var jwtToken = jwtService.generateToken(user);
@@ -56,7 +57,7 @@ public class AuthenticationService {
             request.getPassword()
         )
     );
-    var user = repository.findByEmail(request.getEmail())
+    var user = repository.findUserByEmail(request.getEmail())
         .orElseThrow();
     var jwtToken = jwtService.generateToken(user);
     var refreshToken = jwtService.generateRefreshToken(user);
@@ -103,7 +104,7 @@ public class AuthenticationService {
     refreshToken = authHeader.substring(7);
     userEmail = jwtService.extractUsername(refreshToken);
     if (userEmail != null) {
-      var user = this.repository.findByEmail(userEmail)
+      var user = this.repository.findUserByEmail(userEmail)
               .orElseThrow();
       if (jwtService.isTokenValid(refreshToken, user)) {
         var accessToken = jwtService.generateToken(user);

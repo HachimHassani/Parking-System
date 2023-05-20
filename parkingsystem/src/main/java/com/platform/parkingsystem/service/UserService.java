@@ -71,7 +71,7 @@ public class UserService {
 
 
         public User validateUser(String email, String password) {
-            Optional<User> optionalUser = userRepository.findByEmail(email);
+            Optional<User> optionalUser = userRepository.findUserByEmail(email);
             if (optionalUser.isPresent()) {
                 User user = optionalUser.get();
                 if (passwordEncoder.matches(password, user.getPassword())) {
