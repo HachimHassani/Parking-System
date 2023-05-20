@@ -3,26 +3,24 @@ import com.platform.parkingsystem.api.token.Token;
 import com.platform.parkingsystem.api.user.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.NoArgsConstructor;
+
+import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
 import org.springframework.security.core.userdetails.UserDetails;
 
 
 import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.stream.Collectors;
 
+import java.util.List;
 @Builder
 
 
 @Document(collection = "users")
-
+@Data
 @AllArgsConstructor
 public class User  implements UserDetails {
     @Id
@@ -38,8 +36,8 @@ public class User  implements UserDetails {
 
 
 
-    @DBRef(lazy = true)
-    private Role roles;
+
+    private Role role;
     @DBRef(lazy = true)
     private List<Token> tokens;
 
@@ -124,7 +122,7 @@ public class User  implements UserDetails {
         return password;
     }
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {return roles.getAuthorities();
+    public Collection<? extends GrantedAuthority> getAuthorities() {return role.getAuthorities();
     }
 
     public List<Reservation> getReservations() {

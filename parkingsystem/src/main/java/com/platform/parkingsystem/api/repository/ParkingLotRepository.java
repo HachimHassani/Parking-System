@@ -10,4 +10,6 @@ import java.util.List;
 public interface ParkingLotRepository extends MongoRepository<ParkingLot, String> {
     List<ParkingLot> findByCity(String city);
 
+    List<ParkingLot> findByName(String name);
+
 }

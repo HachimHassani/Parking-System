@@ -1,7 +1,10 @@
 package com.platform.parkingsystem.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.List;
 
 @Document(collection = "parkingspaces")
 public class ParkingSpace {
@@ -9,13 +12,16 @@ public class ParkingSpace {
     private String spaceNumber;
     private Boolean available = true;
 
-    private User user;
 
+    @JsonIgnore
     @DBRef(lazy = true)
     private ParkingLot parkingLot;
     // getters and setters
     public ParkingSpace(){
 
+    }
+    public ParkingSpace(String name){
+        this.spaceNumber = name;
     }
 
     public void setId(String id) {
@@ -50,11 +56,5 @@ public class ParkingSpace {
         return spaceNumber;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
 
-    public User getUser() {
-        return user;
-    }
 }
