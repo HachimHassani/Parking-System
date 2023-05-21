@@ -28,24 +28,35 @@ public class ReservationService {
         return reservationRepository.save(reservation);
     }
 
-    public Reservation getReservationById(String id) {
-        return reservationRepository.findById(id).orElse(null);
+    public List<Reservation> getAllReservationsForUser(User user) {
+        return reservationRepository.findAllByUser(user);
     }
 
-    public Reservation updateReservation(Reservation reservation) {
-        return reservationRepository.save(reservation);
+    public Reservation getReservationByIdForUser(String reservationId, String userId) {
+        Optional<Reservation> reservation = reservationRepository.findById(reservationId);
+        if (reservation.isPresent()) {
+            return reservation.get();
+        } else {
+            throw new ResourceNotFoundException("Reservation", "id", reservationId);
+        }
     }
 
-    public List<Reservation> getAllReservations() {
-        return reservationRepository.findAll();
+    public Reservation updateReservationForUser(Reservation reservation, String userId) {
+        Reservation existingReservation = getReservationByIdForUser(reservation.getId(), userId);
+        existingReservation.setFrom(reservation.getFrom());
+        existingReservation.setTo(reservation.getTo());
+        existingReservation.setActive(reservation.isActive());
+        return reservationRepository.save(existingReservation);
     }
-    public boolean deleteReservation(String id) {
-        Optional<Reservation> reservation = reservationRepository.findById(id);
+
+    public boolean deleteReservationForUser(String reservationId, String userId) {
+        Optional<Reservation> reservation = reservationRepository.findById(reservationId);
         if (reservation.isPresent()) {
             reservationRepository.delete(reservation.get());
             return true;
+        } else {
+            return false;
         }
-        return false;
     }
 
     public Reservation getValidReservationByLicensePlate(String licensePlate) throws ResourceNotFoundException {

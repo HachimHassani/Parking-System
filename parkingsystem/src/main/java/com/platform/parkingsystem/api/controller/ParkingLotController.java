@@ -63,6 +63,13 @@ public class ParkingLotController {
         return new ResponseEntity<>(parkingSpaces, HttpStatus.OK);
     }
 
+    @GetMapping("")
+    public List<ParkingLot> getParkingLots() {
+        List<ParkingLot> parkingLots = parkingLotService.getAllParkingLots();
+        return parkingLots;
+
+    }
+
     @GetMapping(params = "city")
     public List<ParkingLot> getParkingLotsByCity(@RequestParam("city") String city) {
         return parkingLotRepository.findByCity(city);
@@ -90,7 +97,7 @@ public class ParkingLotController {
         List<Map<String, Object>> weeklyReservations = new ArrayList<>();
 
         // Loop through each day of the week
-        for (DayOfWeek dayOfWeek : DayOfWeek.values()) {
+            for (DayOfWeek dayOfWeek : DayOfWeek.values()) {
 
             // Create a map to hold the results for this day of the week
             Map<String, Object> dayOfWeekReservations = new HashMap<>();
@@ -142,6 +149,70 @@ public class ParkingLotController {
         return weeklyReservations;
     }
 
+    @GetMapping("{id}/weekly-reservations")
+    public List<Map<String, Object>> getParkingLotWeeklyReservations(@PathVariable String id) {
+
+        // Create a list to hold the results
+        List<Map<String, Object>> weeklyReservations = new ArrayList<>();
+
+        // Loop through each day of the week
+        for (DayOfWeek dayOfWeek : DayOfWeek.values()) {
+
+            // Create a map to hold the results for this day of the week
+            Map<String, Object> dayOfWeekReservations = new HashMap<>();
+            dayOfWeekReservations.put("dayOfWeek", dayOfWeek.toString());
+
+            // Calculate the average reservations for this day of the week for each parking lot
+            List<Map<String, Object>> parkingLotReservations = new ArrayList<>();
+            List<ParkingLot> parkingLots = parkingLotRepository.findAll();
+
+            ParkingLot parkingLot = parkingLotService.getParkingLotById(id);
+                int reservationsCount = 0;
+                List<Reservation> reservations = parkingLotService.getReservations(parkingLot.getId());
+                for (Reservation reservation : reservations) {
+                    LocalDateTime fromDateTime = reservation.getFrom();
+                    LocalDateTime toDateTime = reservation.getTo();
+                    if (dayOfWeek.equals(fromDateTime.getDayOfWeek())) {
+                        // The reservation starts on this day of the week
+                        if (dayOfWeek.equals(toDateTime.getDayOfWeek())) {
+                            // The reservation ends on the same day of the week, so it is counted as a single reservation
+                            reservationsCount++;
+                        } else {
+                            // The reservation ends on a different day of the week, so it is counted as a fraction of a reservation
+                            LocalDateTime endOfDay = LocalDateTime.of(fromDateTime.toLocalDate(), LocalTime.MAX);
+                            Duration duration = Duration.between(fromDateTime, endOfDay);
+                            double fraction = duration.getSeconds() / (24.0 * 60 * 60);
+                            reservationsCount += fraction;
+                        }
+                    } else if (dayOfWeek.equals(toDateTime.getDayOfWeek())) {
+                        // The reservation ends on this day of the week, so it is counted as a fraction of a reservation
+                        LocalDateTime startOfDay = LocalDateTime.of(toDateTime.toLocalDate(), LocalTime.MIDNIGHT);
+                        Duration duration = Duration.between(startOfDay, toDateTime);
+                        double fraction = duration.getSeconds() / (24.0 * 60 * 60);
+                        reservationsCount += fraction;
+                    } else if (fromDateTime.isBefore(LocalDateTime.of(fromDateTime.toLocalDate().with(TemporalAdjusters.next(dayOfWeek)), LocalTime.MIDNIGHT))) {
+                        // The reservation starts before this day of the week and ends after this day of the week, so it is counted as a full reservation
+                        reservationsCount++;
+                    }
+                }
+                Map<String, Object> parkingLotReservation = new HashMap<>();
+                parkingLotReservation.put("parkingLotId", parkingLot.getId());
+                parkingLotReservation.put("reservationsCount", reservationsCount);
+                parkingLotReservations.add(parkingLotReservation);
+
+
+            // Add the results for this day of the week to the list of results
+            dayOfWeekReservations.put("parkingLotReservations", parkingLotReservations);
+            weeklyReservations.add(dayOfWeekReservations);
+        }
+
+        return weeklyReservations;
+    }
+    @GetMapping("/newest")
+    public ResponseEntity<List<ParkingLot>> getNewestParkingLots() {
+        List<ParkingLot> newestParkingLots = parkingLotService.getNewestParkingLots();
+        return ResponseEntity.ok(newestParkingLots);
+    }
 
 
 }

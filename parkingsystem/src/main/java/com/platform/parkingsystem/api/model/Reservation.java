@@ -1,5 +1,6 @@
 package com.platform.parkingsystem.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -12,8 +13,10 @@ public class Reservation {
     @Id
     private String id;
 
+    @JsonIgnore
     @DBRef(lazy = true)
     private User user;
+
 
     @DBRef(lazy = true)
     private ParkingSpace parkingSpace;

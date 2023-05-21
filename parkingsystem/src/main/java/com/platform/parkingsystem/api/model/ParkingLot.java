@@ -4,11 +4,13 @@ package com.platform.parkingsystem.api.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.platform.parkingsystem.api.repository.ReservationRepository;
 import jakarta.validation.constraints.*;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.security.PrivateKey;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -29,6 +31,9 @@ public class ParkingLot {
     private int capacity;
     private String city;
 
+    @JsonIgnore
+    @CreatedDate
+    private LocalDateTime createdAt;
     @JsonIgnore
     @DBRef(lazy = true)
     private List<ParkingSpace> parkingSpaces;
