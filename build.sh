@@ -1,7 +1,7 @@
 #build front end
 cd parking-system-frontend
 ng build
-cd..
+cd ..
 
 #build backend
 cd parkingsystem
