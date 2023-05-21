@@ -1,6 +1,8 @@
 package com.platform.parkingsystem.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
@@ -13,6 +15,9 @@ public class Payment {
     private double amount;
     private LocalDateTime paymentDate;
     private boolean complete;
+
+    @JsonIgnore
+    @DBRef(lazy = true)
     private User user;
 
     // getters and setters
@@ -36,6 +41,14 @@ public class Payment {
 
     public LocalDateTime getPaymentDate() {
         return paymentDate;
+    }
+
+    public void setReservationId(String reservationId) {
+        this.reservationId = reservationId;
+    }
+
+    public String getReservationId() {
+        return reservationId;
     }
 
     public void setPaymentDate(LocalDateTime paymentDate) {

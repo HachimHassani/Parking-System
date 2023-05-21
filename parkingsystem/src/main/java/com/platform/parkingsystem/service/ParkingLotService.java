@@ -8,6 +8,7 @@ import com.platform.parkingsystem.api.repository.ParkingLotRepository;
 import com.platform.parkingsystem.api.repository.ParkingSpaceRepository;
 import com.platform.parkingsystem.api.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -71,6 +72,8 @@ public class ParkingLotService {
         return parkingSpaceRepository.findByParkingLotId(parkingLotId);
     }
 
+    public List<ParkingLot> getAllParkingLots(){return parkingLotRepository.findAll();}
+
 
 
     public List<Reservation> getReservations(String id) {
@@ -79,5 +82,10 @@ public class ParkingLotService {
             allReservations.addAll(reservationRepository.findByParkingSpace(space));
         }
         return allReservations;
+    }
+
+    public List<ParkingLot> getNewestParkingLots() {
+        Sort sort = Sort.by(Sort.Direction.DESC, "createdAt");
+        return parkingLotRepository.findAll(sort);
     }
 }

@@ -19,6 +19,8 @@ public interface ReservationRepository extends MongoRepository<Reservation, Stri
 
     List<Reservation> findByUserAndActiveTrue(User user);
 
+    List<Reservation> findAllByUser(User user);
+
     List<Reservation> findRecentReservationsByUser(User user);
     List<Reservation> findByParkingSpace(ParkingSpace parkingSpace);
 
