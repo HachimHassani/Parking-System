@@ -1,6 +1,7 @@
 import { Component, HostListener } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
 	selector: 'app-navbar-account',
@@ -11,13 +12,19 @@ export class NavbarAccountComponent {
 	active = false;
 	clicked = false;
 	
-	constructor() {}
+	constructor(private router: Router, private cookieService: CookieService) {}
 
 	//icon on clicked
 	onIconClicked() {
 		this.active = !this.active;
 		this.clicked = true;
 
+	}
+
+	//logout
+	logout() {
+		this.cookieService.delete('token');
+		this.router.navigate(['/login']);
 	}
 
 	//on click everywhere 

@@ -36,7 +36,7 @@
 				Change My Password 
 			</a>
 
-			<a class="navbar-account-button" [routerLink]="['/login']"> 
+			<a class="navbar-account-button" (click)="logout()"> 
 				<img src="assets/logout.png" 
 				class="navbar-account-button-icon"/>
 				Logout 

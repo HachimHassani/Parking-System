@@ -24,6 +24,8 @@ import { NotificationComponent } from './notification/notification.component';
 import { LoadingComponent } from './loading/loading.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ChartComponent, NgApexchartsModule } from 'ng-apexcharts';
+import { CookieService } from 'ngx-cookie-service';
+import { PermissionService } from './auth.guard';
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,7 +58,7 @@ import { ChartComponent, NgApexchartsModule } from 'ng-apexcharts';
     }),
     NgApexchartsModule,
   ],
-  providers: [],
+  providers: [CookieService, PermissionService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
