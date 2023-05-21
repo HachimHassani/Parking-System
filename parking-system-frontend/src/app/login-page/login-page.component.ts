@@ -32,8 +32,7 @@ export class LoginPageComponent implements OnInit{
 	signinData = {
 		firstName: '',
 		lastName: '',
-		liscencePlate: '',
-		phone: '',
+		licensePlate: '',
 		email: '',
 		password: '',
 		confirmPassword: ''
