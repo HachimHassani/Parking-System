@@ -1,9 +1,17 @@
 import { Chance } from 'chance';
 
 describe('Navigation Test', () => {
-    it('Visits the initial project page', () => {
-        cy.visit('/');
-        cy.contains('arking System');
+    //login before each
+    beforeEach(() => {
+        cy.visit('/login');
+        //correct identifiers
+        const email = 'haitamksiks2001@gmail.com';
+        const password = '123456789';
+        //insert input
+        cy.get('input[name=loginEmail]').type(email);
+        cy.get('input[name=loginPassword]').type(password);
+        //login
+        cy.get('button[name=submit]').click();
     });
 
     it('Can click reservation button', () => {
@@ -28,7 +36,9 @@ describe('Navigation Test', () => {
         cy.get('h1[name=price]').contains('10.00 DH');
 
         cy.get('button[name=order]').click();
-        cy.url().should('contain', '/');
+        cy.url().should('equal', '/');
 
+        cy.visit('/reservations');
+        /* check for parking in reser */
     });
 })

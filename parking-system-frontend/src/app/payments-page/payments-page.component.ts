@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ComponentRef, HostListener, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
-import { PaymentCardComponent } from '../payment-card/payment-card.component';
+import { PaymentCardComponent, PaymentData } from '../payment-card/payment-card.component';
 import { ProgressiveCardsLoaderComponent } from '../progressive-cards-loader/progressive-cards-loader.component';
 import { take } from 'rxjs';
 import { LoadingComponent } from '../loading/loading.component';
@@ -9,7 +9,7 @@ import { LoadingComponent } from '../loading/loading.component';
 	templateUrl: './payments-page.component.html',
 	styleUrls: ['./payments-page.component.css']
 })
-export class PaymentsPageComponent extends ProgressiveCardsLoaderComponent<PaymentCardComponent> implements OnInit, AfterViewInit{
+export class PaymentsPageComponent extends ProgressiveCardsLoaderComponent<PaymentCardComponent, PaymentData> implements OnInit, AfterViewInit{
 	@ViewChild(LoadingComponent) loadingComponent!: LoadingComponent;
 	//constuctor
 	constructor() {

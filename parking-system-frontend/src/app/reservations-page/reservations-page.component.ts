@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { ProgressiveCardsLoaderComponent } from '../progressive-cards-loader/progressive-cards-loader.component';
-import { ReservationCardComponent } from '../reservation-card/reservation-card.component';
+import { ReservationCardComponent, ReservationData } from '../reservation-card/reservation-card.component';
 import { LoadingComponent } from '../loading/loading.component';
 
 @Component({
@@ -8,7 +8,7 @@ import { LoadingComponent } from '../loading/loading.component';
 	templateUrl: './reservations-page.component.html',
 	styleUrls: ['./reservations-page.component.css']
 })
-export class ReservationsPageComponent extends ProgressiveCardsLoaderComponent<ReservationCardComponent> implements AfterViewInit{
+export class ReservationsPageComponent extends ProgressiveCardsLoaderComponent<ReservationCardComponent, ReservationData> implements AfterViewInit{
 	@ViewChild(LoadingComponent) loadingComponenet!: LoadingComponent;
 
 

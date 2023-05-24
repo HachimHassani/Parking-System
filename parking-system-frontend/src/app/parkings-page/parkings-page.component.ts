@@ -1,21 +1,22 @@
 import { AfterViewInit, Component, HostListener, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
-import { ParkingCardComponent } from '../parking-card/parking-card.component';
+import { ParkingCardComponent, ParkingCardData } from '../parking-card/parking-card.component';
 import { ProgressiveCardsLoaderComponent } from '../progressive-cards-loader/progressive-cards-loader.component';
 import { NavigationEnd, Router } from '@angular/router';
 import { LoadingComponent } from '../loading/loading.component';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
 	selector: 'app-parkings-page',
 	templateUrl: './parkings-page.component.html',
 	styleUrls: ['./parkings-page.component.css']
 })
-export class ParkingsPageComponent extends ProgressiveCardsLoaderComponent<ParkingCardComponent> implements OnInit, AfterViewInit{
+export class ParkingsPageComponent extends ProgressiveCardsLoaderComponent<ParkingCardComponent, ParkingCardData> implements OnInit, AfterViewInit{
 	//get loading component
 	@ViewChild(LoadingComponent) loadingComponent!: LoadingComponent;
 
 	//constuctor
-	constructor(private router: Router, private http: HttpClient) {
+	constructor(private router: Router, private http: HttpClient, private cookieService: CookieService) {
 		super([], ParkingCardComponent);
 	}
 
@@ -37,14 +38,32 @@ export class ParkingsPageComponent extends ProgressiveCardsLoaderComponent<Parki
 		await new Promise(r => setTimeout(r, 0));
 		//simulate loading time
 		this.loadingComponent.show();
+		//get user token
+		const token = this.cookieService.get('token');
 		//fetch data from api
-		/*this.http.get('api/parking-lots/645d7a9dcbf6044e7e3ffac3').subscribe(res => {
-			console.log(res);
-		});*/
-		await new Promise(r => setTimeout(r, 2000));
-		this.loadingComponent.hide();
-		this.addMultipleCards(10);
-		//show data
+		const subscrition = this.http.get<Array<any>>('api/parking-lots', {
+			headers: {
+				'Authorization': `Bearer ${token}`
+			}
+		}).subscribe((res: Array<any>) => {
+			//convert data
+			let parkingList: Array<ParkingCardData> = [];
+			res.forEach(data => {
+				let parkingData :ParkingCardData = {
+					id: data.id,
+					name: data.name,
+					city: data.city,
+					inCollection: false
+				};
+				parkingList.push(parkingData);
+			});
+			//set data
+			this.setData(parkingList);
+			this.loadingComponent.hide();
+			this.addMultipleCards(10);
+			subscrition.unsubscribe();
+		});
+		
 	}
 
 	//

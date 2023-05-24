@@ -79,33 +79,36 @@ export class LoginPageComponent implements OnInit{
 		});
 	}
 
-	//signin
-	async createAccount() {
-		//artifcial wait to fetch data
-		await new Promise(r => setTimeout(r, 1000));
-		return this.signinData.password == this.signinData.confirmPassword;
-	}
 
 	//signin clicked
 	async onSigninClicked() {
-		//set loading
-		this.loadingComponent.show();
-		//verify user authentification
-		const created = await this.createAccount();
-		//set loading back to normal
-		this.loadingComponent.hide()
+		//create account
+		const canCreate = this.signinData.password == this.signinData.confirmPassword;
+		
 		//create notification
 		let notification = this.notificationContainer.createComponent<NotificationComponent>(NotificationComponent);
-		if (created) {
+		if (!canCreate) {
+			//notify for bad passowrd
+			notification.instance.show("error", "Password confirm incorrect", 3)
+			.then(() => {
+				notification.destroy();
+			});
+		}
+		//start loading
+		this.loadingComponent.show();
+		//registration
+		const regRequest = this.http.post('/api/auth/register', this.signinData);
+		//subscrible
+		const reqSubscription = regRequest.subscribe((data: any) => {
 			this.isLogin = true;
 			//notify for creation
-			await notification.instance.show("correct", "Account Created", 3);
-		}
-		else {
-			//notify for bad passowrd
-			await notification.instance.show("error", "Password confirm incorrect", 3);
-		}
-		notification.destroy();
+			notification.instance.show("correct", "Account Created", 3)
+			.then(() => {
+				notification.destroy();
+			});
+			//set loading back to normal
+			this.loadingComponent.hide()
+		});
 	}
 	
 	//buttons events

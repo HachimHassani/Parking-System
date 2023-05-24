@@ -14,14 +14,7 @@ export interface ParkingCardData {
 	templateUrl: './parking-card.component.html',
 	styleUrls: ['./parking-card.component.css']
 })
-export class ParkingCardComponent  extends CardComponent{
-	//data
-	data: ParkingCardData = {
-		id: "parkingid",
-		name: "Parking's name",
-		city: "Parking's city",
-		inCollection: false
-	}
+export class ParkingCardComponent  extends CardComponent<ParkingCardData>{
 	//collection
 	isCollectionButtonAnimated = false;
 
@@ -34,6 +27,8 @@ export class ParkingCardComponent  extends CardComponent{
 
 	//on collection clikc
 	onCollectionClick() {
+		if (!this.data)
+			return;
 		this.data.inCollection = !this.data.inCollection;
 		this.collectionClickAninmate();
 	}

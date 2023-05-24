@@ -74,7 +74,7 @@ describe('Login Test', () => {
         cy.get('button[name=submit]').click();
         cy.get('button[name=submit]').should('not.be', 'disabled');
         //expect password worng
-        cy.url().should('contain', '/');
+        cy.url().should('equal', '/');
 
     });
     

@@ -1,17 +1,20 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { EChartsOption, SeriesOption, color } from 'echarts';
 import { LoadingComponent } from '../loading/loading.component';
 import { ActivatedRoute, Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { CookieService } from 'ngx-cookie-service';
+import { Subscription } from 'rxjs';
 
 @Component({
 	selector: 'app-parking-info',
 	templateUrl: './parking-info.component.html',
 	styleUrls: ['./parking-info.component.css']
 })
-export class ParkingInfoComponent implements OnInit, AfterViewInit {
+export class ParkingInfoComponent implements OnInit, AfterViewInit, OnDestroy {
 	@ViewChild(LoadingComponent) loadingComponent!: LoadingComponent;
 
-	constructor(private route: ActivatedRoute ){}
+	constructor(private route: ActivatedRoute, private http: HttpClient, private cookieService: CookieService ){}
 
 	//data
 	id = "";
@@ -21,6 +24,10 @@ export class ParkingInfoComponent implements OnInit, AfterViewInit {
 	reserved = 0;
 	places = 0;
 	reservationPerDay = Array<number>(8).fill(0);
+
+	//subscriptions
+	parkingInfoSubscription: Subscription | undefined;
+	reservationPerWeekSubscription: Subscription | undefined;
 
 	//loading
 	isLoading = true;
@@ -107,18 +114,52 @@ export class ParkingInfoComponent implements OnInit, AfterViewInit {
 		this.setReservationChart(this.reservationPerDay);
 	}
 
+	//fetch reservation per week
+	fetchReservationPerWeek() {
+		//get user token
+		const token = this.cookieService.get('token');
+		//fetch data from api
+		this.reservationPerWeekSubscription = this.http.get<Array<any>>(`api/parking-lots/${this.id}/weekly-reservations`, {
+			headers: {
+				'Authorization': `Bearer ${token}`
+			}
+		}).subscribe((res: Array<any>) => {
+			let reservationPerDay: Array<number> = [];
+			res.forEach(day => {
+				console.log(day);
+				reservationPerDay.push(
+					day.parkingLotReservations.length
+				);
+			});
+			this.setReservationPerDay(reservationPerDay);
+		});
+	}
+
 	//fetch data
 	async fetchParkingData() {
 		await new Promise(r => setTimeout(r, 0));
 		this.loadingComponent.show();
-		//artifical wait for testing
-		await new Promise(r => setTimeout(r, 2000));
-		//set data
-		this.setParkingPlaces(79, 100);
-		this.setReservationPerDay([24, 32, 80, 60, 13, 42, 8]);
-		//end loading
-		this.isLoading = false;
-		this.loadingComponent.hide();
+		//fetch data
+		//get user token
+		const token = this.cookieService.get('token');
+		//fetch data from api
+		this.parkingInfoSubscription = this.http.get(`api/parking-lots/${this.id}`, {
+			headers: {
+				'Authorization': `Bearer ${token}`
+			}
+		}).subscribe((res: any) => {
+			console.log(res);
+			this.city = res.city;
+			this.cost = res.parkingFee;
+			this.places = res.capacity;
+			this.setParkingPlaces(res.capacity, this.places - res.availableSpaces);
+			this.loadingComponent.hide();
+			this.isLoading = false;
+		});
+		this.setReservationPerDay([0, 0, 0, 0, 0, 0, 0]);
+		//get weekly data
+		this.fetchReservationPerWeek();	
+		
 	}
 
 	//on init
@@ -130,9 +171,14 @@ export class ParkingInfoComponent implements OnInit, AfterViewInit {
 		});
 	}
 	
-	//
+	//after view init
 	ngAfterViewInit(): void {
 		this.fetchParkingData();
 	}
 
+	//on destroy
+	ngOnDestroy(): void {
+		this.parkingInfoSubscription?.unsubscribe();
+		this.reservationPerWeekSubscription?.unsubscribe();
+	}
 }
