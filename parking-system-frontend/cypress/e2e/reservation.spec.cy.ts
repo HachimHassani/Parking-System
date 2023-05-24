@@ -38,7 +38,7 @@ describe('Navigation Test', () => {
         cy.get('button[name=order]').click();
         cy.url().should('equal', '/');
 
-        cy.visit('/reservations');
+        //cy.visit('/reservations');
         /* check for parking in reser */
     });
 })
