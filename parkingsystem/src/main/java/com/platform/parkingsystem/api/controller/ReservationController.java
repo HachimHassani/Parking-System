@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/reservations")
+@RequestMapping("/reservations")
 public class ReservationController {
 
     @Autowired
@@ -78,7 +78,7 @@ public class ReservationController {
     public ResponseEntity<List<Reservation>> getAllReservations(Authentication authentication) {
         String username = authentication.getName();
         Optional<User> userop = userRepository.findUserByEmail(username);
-        if (userop.isPresent()){
+        if (userop.isEmpty()){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
         User user = userop.get();
