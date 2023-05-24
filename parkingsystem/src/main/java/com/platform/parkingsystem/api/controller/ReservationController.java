@@ -36,14 +36,13 @@ public class ReservationController {
     @PostMapping("")
     public ResponseEntity<Reservation> createReservation(
             Authentication authentication,
-            @RequestBody Reservation reservation,
             @RequestParam("parking_lot_id") String parkinglotId,
             @RequestParam("from") String from,
             @RequestParam("to") String to) {
 
         String username = authentication.getName();
         Optional<User> userop = userRepository.findUserByEmail(username);
-        if (userop.isPresent()){
+        if (userop.isEmpty()){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
         User user = userop.get();
@@ -64,6 +63,7 @@ public class ReservationController {
 
         ParkingSpace parkingSpace = reservationService.chooseparkingspace(parkingLot, start, end);
         // Create the reservation
+        Reservation reservation = new Reservation();
         reservation.setUser(user);
         reservation.setParkingSpace(parkingSpace);
         reservation.setFrom(start);
@@ -91,7 +91,7 @@ public class ReservationController {
     public ResponseEntity<Reservation> getReservationById(@PathVariable String id, Authentication authentication) {
         String username = authentication.getName();
         Optional<User> userop = userRepository.findUserByEmail(username);
-        if (userop.isPresent()){
+        if (userop.isEmpty()){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
         User user = userop.get();
@@ -107,7 +107,7 @@ public class ReservationController {
     public ResponseEntity<Reservation> updateReservation(@PathVariable String id, @RequestBody Reservation reservation, Authentication authentication) {
         String username = authentication.getName();
         Optional<User> userop = userRepository.findUserByEmail(username);
-        if (userop.isPresent()){
+        if (userop.isEmpty()){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
         User user = userop.get();
@@ -124,7 +124,7 @@ public class ReservationController {
     public ResponseEntity<Void> deleteReservation(@PathVariable String id, Authentication authentication) {
         String username = authentication.getName();
         Optional<User> userop = userRepository.findUserByEmail(username);
-        if (userop.isPresent()){
+        if (userop.isEmpty()){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
         User user = userop.get();
