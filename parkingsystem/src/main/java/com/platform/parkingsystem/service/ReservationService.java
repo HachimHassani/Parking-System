@@ -85,12 +85,14 @@ public class ReservationService {
     public boolean isTimeSlotAvailable(ParkingLot parkingLot, LocalDateTime from, LocalDateTime to) {
         List<ParkingSpace> parkingSpaces = parkingLot.getParkingSpaces();
         for (ParkingSpace parkingSpace : parkingSpaces) {
+            int t = 0;
             List<Reservation> reservations = reservationRepository.findByParkingSpaceAndActiveTrue(parkingSpace);
             for (Reservation reservation : reservations) {
                 if (!(reservation.getTo().isAfter(from) && to.isAfter(reservation.getFrom()))) {
-                    return true;
+                    t+=1;
                 }
             }
+            if (t<parkingLot.getCapacity()){return true;}
         }
         return false;
     }
@@ -98,12 +100,15 @@ public class ReservationService {
     public ParkingSpace chooseparkingspace(ParkingLot parkingLot, LocalDateTime from, LocalDateTime to) {
         List<ParkingSpace> parkingSpaces = parkingLot.getParkingSpaces();
         for (ParkingSpace parkingSpace : parkingSpaces) {
+            boolean t  =true;
             List<Reservation> reservations = reservationRepository.findByParkingSpaceAndActiveTrue(parkingSpace);
             for (Reservation reservation : reservations) {
-                if (!(reservation.getTo().isAfter(from) && to.isAfter(reservation.getFrom()))) {
-                    return parkingSpace;
+                if (((reservation.getTo().isAfter(from) && (reservation.getTo().isBefore(from)))||(to.isAfter(reservation.getFrom())&&to.isBefore(reservation.getFrom())))) {
+                    t = false;
+                    break;
                 }
             }
+            if (t){return parkingSpace;}
         }
         return null;
     }

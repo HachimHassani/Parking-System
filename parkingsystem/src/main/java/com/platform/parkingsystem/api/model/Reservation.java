@@ -17,7 +17,7 @@ public class Reservation {
     @DBRef(lazy = true)
     private User user;
 
-
+    @JsonIgnore
     @DBRef(lazy = true)
     private ParkingSpace parkingSpace;
 
@@ -54,12 +54,9 @@ public class Reservation {
         this.user = user;
     }
 
-    public ParkingSpace getReservedSpace() {
-        return parkingSpace;
-    }
 
-    public void setReservedSpace(ParkingSpace parkingSpace) {
-        this.parkingSpace = parkingSpace;
+    public String getSpaceName() {
+        return this.parkingSpace.getSpaceNumber();
     }
 
     public LocalDateTime getFrom() {

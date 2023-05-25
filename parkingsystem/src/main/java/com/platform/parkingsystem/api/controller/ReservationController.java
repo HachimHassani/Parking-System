@@ -36,9 +36,7 @@ public class ReservationController {
     @PostMapping("")
     public ResponseEntity<Reservation> createReservation(
             Authentication authentication,
-            @RequestParam("parking_lot_id") String parkinglotId,
-            @RequestParam("from") String from,
-            @RequestParam("to") String to) {
+            @RequestBody ReservationRequest request) {
 
         String username = authentication.getName();
         Optional<User> userop = userRepository.findUserByEmail(username);
@@ -47,10 +45,10 @@ public class ReservationController {
         }
         User user = userop.get();
 
-        LocalDateTime start = LocalDateTime.parse(from);
-        LocalDateTime end = LocalDateTime.parse(to);
+        LocalDateTime start = LocalDateTime.parse(request.from);
+        LocalDateTime end = LocalDateTime.parse(request.to);
 
-        ParkingLot parkingLot = parkingLotService.getParkingLotById(parkinglotId);
+        ParkingLot parkingLot = parkingLotService.getParkingLotById(request.parkinglotId);
         if (parkingLot == null) {
             // Handle parking lot not found case
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
