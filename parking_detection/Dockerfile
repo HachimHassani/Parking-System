@@ -1,8 +1,8 @@
 FROM python:3.9
 
-WORKDIR /app
+WORKDIR /app/Parking-System/parking_detection
 
-COPY detect_licencePlate.py .
+COPY parking_detection/detect_licencePlate.py .
 
 # Install the required dependencies
 RUN pip install --no-cache-dir -r requirements.txt
