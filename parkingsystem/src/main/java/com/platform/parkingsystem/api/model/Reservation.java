@@ -60,7 +60,7 @@ public class Reservation {
     }
 
     public String getSpaceId(){
-        return this.parkingSpace.getId();
+        return this.parkingSpace.getParkingLot().getId();
     }
 
     public LocalDateTime getFrom() {
