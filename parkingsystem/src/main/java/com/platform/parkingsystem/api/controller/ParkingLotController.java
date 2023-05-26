@@ -79,7 +79,7 @@ public class ParkingLotController {
         User user = userop.get();
         List<ParkingLot> parkingLots = parkingLotService.getAllParkingLots();
         for (ParkingLot parkingLot : parkingLots) {
-            boolean isFavorite = user.getFavourites() != null && user.getFavourites().contains(parkingLot);
+            boolean isFavorite = ((user.getFavourites() != null) && user.getFavourites().contains(parkingLot));
             parkingLot.setFavorite(isFavorite);
         }
         return parkingLots;
