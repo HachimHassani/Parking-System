@@ -73,14 +73,22 @@ public class UserController {
         if (user.getFavourites() == null || user.getFavourites().isEmpty()){
             user.setFavourites(new ArrayList<>(Collections.singletonList(parkingLot)));
         }else{
-        user.getFavourites().add(parkingLot);
+            boolean isAlreadyFavorite = user.getFavourites().stream().anyMatch(p -> p.getId().equals(parkingLot.getId()));
+            if (!isAlreadyFavorite) {
+                user.getFavourites().add(parkingLot);
+            }
         }
         return userRepository.save(user);
     }
 
-    @DeleteMapping("/{userId}/favourites/{parkingLotId}")
-    public User removeParkingLotFromFavourites(@PathVariable String userId, @PathVariable String parkingLotId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found"));
+    @DeleteMapping("/favourites/{parkingLotId}")
+    public User removeParkingLotFromFavourites(Authentication authentication, @PathVariable String parkingLotId) {
+        String username = authentication.getName();
+        Optional<User> userop = userRepository.findUserByEmail(username);
+        if (userop.isEmpty()){
+            return null;
+        }
+        User user = userop.get();
         ParkingLot parkingLot = parkingLotRepository.findById(parkingLotId).orElseThrow(() -> new ResourceNotFoundException("Parking lot not found"));
 
         user.getFavourites().remove(parkingLot);
