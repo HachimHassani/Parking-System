@@ -46,6 +46,8 @@ public class ParkingLotService {
 
         // Update the parking lot with the generated parking spaces
         createdParkingLot.setParkingSpaces(parkingSpaces);
+        createdParkingLot.setAvailableSpaces(createdParkingLot.getCapacity());
+
         return parkingLotRepository.save(createdParkingLot);
     }
 
