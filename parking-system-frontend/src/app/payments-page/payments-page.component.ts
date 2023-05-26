@@ -13,7 +13,7 @@ export class PaymentsPageComponent extends ProgressiveCardsLoaderComponent<Payme
 	@ViewChild(LoadingComponent) loadingComponent!: LoadingComponent;
 	//constuctor
 	constructor() {
-		super([], PaymentCardComponent);
+		super([0, 0, 0, 0, 0, 0], PaymentCardComponent);
 	}
 
 	//create payments card

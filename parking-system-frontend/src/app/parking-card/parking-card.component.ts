@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { CardComponent } from '../card/card.component';
 import { HttpClient } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
@@ -17,7 +17,7 @@ export interface ParkingCardData {
 	templateUrl: './parking-card.component.html',
 	styleUrls: ['./parking-card.component.css']
 })
-export class ParkingCardComponent  extends CardComponent<ParkingCardData>{
+export class ParkingCardComponent  extends CardComponent<ParkingCardData> implements OnDestroy{
 	//collection
 	isCollectionButtonAnimated = false;
 	collectionSubscription : Subscription | undefined;
@@ -43,17 +43,31 @@ export class ParkingCardComponent  extends CardComponent<ParkingCardData>{
 		const userId = this.cookieService.get('id');
 		//get token
 		const token = this.cookieService.get('token');
-		//body
-		const body = {};
-		//add to favorite
-		this.collectionSubscription = this.http.post(`/api/users/${userId}/favourites/${this.data.id}/`, body, {
-			headers: {
-				'Authorization': `Bearer ${token}`
-			}
-		})
-		.subscribe((res) => {
-			console.log(res);
-		});
+		
+		if (this.data.inCollection) {
+			//body
+			const body = {};
+			//add to favorite
+			this.collectionSubscription = this.http.post(`/api/users/favourites/${this.data.id}`, body, {
+				headers: {
+					'Authorization': `Bearer ${token}`
+				}
+			}).subscribe();
+		}
+		else {
+			//body
+			const body = {};
+			//add to favorite
+			this.collectionSubscription = this.http.delete(`/api/users/favourites/${this.data.id}`, {
+				headers: {
+					'Authorization': `Bearer ${token}`
+				}
+			}).subscribe();
+		}
+		
 	}
 
+	ngOnDestroy(): void {
+		this.collectionSubscription?.unsubscribe();
+	}
 }

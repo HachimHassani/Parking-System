@@ -23,6 +23,8 @@ export class ParkingsPageComponent extends ProgressiveCardsLoaderComponent<Parki
 	order : string | undefined;
 	city : string | undefined;
 
+	collections :Array<string> = [];
+
 	//on init
 	ngOnInit() {
 		//check query params
@@ -41,10 +43,7 @@ export class ParkingsPageComponent extends ProgressiveCardsLoaderComponent<Parki
 	}
 
 	//fetch parking data
-	async fetchParkingData() {
-		await new Promise(r => setTimeout(r, 0));
-		//simulate loading time
-		this.loadingComponent.show();
+	fetchParkingData() {
 		//get user token
 		const token = this.cookieService.get('token');
 		//define route
@@ -52,7 +51,10 @@ export class ParkingsPageComponent extends ProgressiveCardsLoaderComponent<Parki
 		if (this.city && this.city != 'all') {
 			route = '/api/parking-lots?city=' + this.city;
 		}
-		
+		else if (this.order && this.order == 'collection') {
+			route = '/api/users/favourites';
+		}
+
 		//fetch data from api
 		const subscrition = this.http.get<Array<any>>(route, {
 			headers: {
@@ -61,12 +63,14 @@ export class ParkingsPageComponent extends ProgressiveCardsLoaderComponent<Parki
 		}).subscribe((res: Array<any>) => {
 			//convert data
 			let parkingList: Array<ParkingCardData> = [];
+			//fetch fata
+			if (res)
 			res.forEach(data => {
 				let parkingData :ParkingCardData = {
 					id: data.id,
 					name: data.name,
 					city: data.city,
-					inCollection: false
+					inCollection: this.collections.indexOf(data.id) >= 0
 				};
 				parkingList.push(parkingData);
 			});
@@ -79,9 +83,29 @@ export class ParkingsPageComponent extends ProgressiveCardsLoaderComponent<Parki
 		
 	}
 
+	async fetchCollection() {
+		await new Promise(r => setTimeout(r, 0));
+		//simulate loading time
+		this.loadingComponent.show();
+		//get user token
+		const token = this.cookieService.get('token');
+		//fetch data from api
+		this.http.get<Array<any>>('/api/users/favourites', {
+			headers: {
+				'Authorization': `Bearer ${token}`
+			}
+		}).subscribe((res: Array<any>) => {
+			res.forEach((data: any) => {
+				this.collections.push(data.id);
+			});
+			this.fetchParkingData();
+		});
+
+	}
+
 	//
 	override ngAfterViewInit(): void {
-		this.fetchParkingData();
+		this.fetchCollection();
 	}
 
 }

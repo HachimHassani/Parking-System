@@ -39,12 +39,12 @@ export class ReservationCardComponent extends CardComponent<ReservationData> imp
 	]
 	getStateName() {
 		if (!this.data?.state)
-			return '';
+			return "Before Available";
 		return this.stateString[this.data?.state];
 	}
 
 
-	time = '';
+	time = '0 : 0 : 0';
 	timerSubscription: Subscription | undefined;
 
 	getTimerValue() {
@@ -71,7 +71,7 @@ export class ReservationCardComponent extends CardComponent<ReservationData> imp
 	//on init
 	ngOnInit(): void {
 		//this.parkingNumber = Math.floor(Math.random() * 100);
-		this.timerSubscription = timer(0, 1000).subscribe(() => {
+		this.timerSubscription = timer(100, 100).subscribe(() => {
 			this.getTimerValue();
 		});
 	}
