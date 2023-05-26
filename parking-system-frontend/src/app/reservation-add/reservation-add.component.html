@@ -1,6 +1,7 @@
 <div class="cards-container">
     <app-loading></app-loading>
 
+    <app-notification></app-notification>
 
     <div class="cards-list" *ngIf="!isLoading">
         
@@ -41,7 +42,7 @@
             [xaxis]="availableTimelineOptions.xaxis">
         </apx-chart-->
 
-        <form class="reservation-form">
+        <div class="reservation-form">
             <div class="reservation-from-input">
                 <label> From </label>
                 <input #reservationFrom (input)="onFromInputChange(reservationFrom.valueAsNumber)" type="datetime-local" name="reservationFrom"/>
@@ -53,11 +54,11 @@
             </div>
 
             <div class="reservation-form-buttons">
-                <button class="btn btn-positive" [routerLink]="['/']" name="order"> Order </button>
+                <button class="btn btn-positive" (click)="onOrderClick()" name="order"> Order </button>
                 <button class="btn button-cancel" [routerLink]="['/']"> Cancel </button>
             </div>
 
             
-        </form>
+        </div>
     </div>
 </div>

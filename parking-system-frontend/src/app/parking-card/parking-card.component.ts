@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { CardComponent } from '../card/card.component';
+import { HttpClient } from '@angular/common/http';
+import { CookieService } from 'ngx-cookie-service';
+import { Subscription } from 'rxjs';
 
 export interface ParkingCardData {
 	id: string,
@@ -17,6 +20,11 @@ export interface ParkingCardData {
 export class ParkingCardComponent  extends CardComponent<ParkingCardData>{
 	//collection
 	isCollectionButtonAnimated = false;
+	collectionSubscription : Subscription | undefined;
+
+	constructor (private http: HttpClient, private cookieService: CookieService) {
+		super();
+	}
 
 	//click animation
 	async collectionClickAninmate() {
@@ -31,6 +39,13 @@ export class ParkingCardComponent  extends CardComponent<ParkingCardData>{
 			return;
 		this.data.inCollection = !this.data.inCollection;
 		this.collectionClickAninmate();
+		//body
+		const body = {};
+		//add to favorite
+		this.collectionSubscription = this.http.post(`/api/id/favourites/`, body)
+		.subscribe((res) => {
+			
+		});
 	}
 
 }

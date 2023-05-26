@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, HostListener, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { ParkingCardComponent, ParkingCardData } from '../parking-card/parking-card.component';
 import { ProgressiveCardsLoaderComponent } from '../progressive-cards-loader/progressive-cards-loader.component';
-import { NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { LoadingComponent } from '../loading/loading.component';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
@@ -16,17 +16,24 @@ export class ParkingsPageComponent extends ProgressiveCardsLoaderComponent<Parki
 	@ViewChild(LoadingComponent) loadingComponent!: LoadingComponent;
 
 	//constuctor
-	constructor(private router: Router, private http: HttpClient, private cookieService: CookieService) {
+	constructor(private router: Router, private activatedRoute: ActivatedRoute, private http: HttpClient, private cookieService: CookieService) {
 		super([], ParkingCardComponent);
 	}
 
+	order : string | undefined;
+	city : string | undefined;
+
 	//on init
 	ngOnInit() {
+		//check query params
+		this.activatedRoute.queryParams
+			.subscribe(params => {
+				this.order = params['order'];
+				this.city = params['city'];
+			})
 		//look for changing link
 		this.router.events.subscribe(event => {
 			if (event instanceof NavigationEnd) {
-				//get params
-				//let order = ;
 				this.deleteAllCards();
 				this.fetchParkingData();
 			}
@@ -40,8 +47,14 @@ export class ParkingsPageComponent extends ProgressiveCardsLoaderComponent<Parki
 		this.loadingComponent.show();
 		//get user token
 		const token = this.cookieService.get('token');
+		//define route
+		let route = '/api/parking-lots';
+		if (this.city && this.city != 'all') {
+			route = '/api/parking-lots?city=' + this.city;
+		}
+		
 		//fetch data from api
-		const subscrition = this.http.get<Array<any>>('api/parking-lots', {
+		const subscrition = this.http.get<Array<any>>(route, {
 			headers: {
 				'Authorization': `Bearer ${token}`
 			}
