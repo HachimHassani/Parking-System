@@ -3,12 +3,15 @@ package com.platform.parkingsystem.api.controller;
 import com.platform.parkingsystem.api.model.ParkingLot;
 import com.platform.parkingsystem.api.model.ParkingSpace;
 import com.platform.parkingsystem.api.model.Reservation;
+import com.platform.parkingsystem.api.model.User;
 import com.platform.parkingsystem.api.repository.ParkingLotRepository;
 import com.platform.parkingsystem.api.repository.ReservationRepository;
+import com.platform.parkingsystem.api.repository.UserRepository;
 import com.platform.parkingsystem.service.ParkingLotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.*;
@@ -27,6 +30,9 @@ public class ParkingLotController {
     private  ParkingLotRepository parkingLotRepository;
     @Autowired
     private ReservationRepository reservationRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     public ParkingLotController(ParkingLotRepository parkingLotRepository) {
@@ -64,8 +70,18 @@ public class ParkingLotController {
     }
 
     @GetMapping("")
-    public List<ParkingLot> getParkingLots() {
+    public List<ParkingLot> getParkingLots(Authentication authentication) {
+        String username = authentication.getName();
+        Optional<User> userop = userRepository.findUserByEmail(username);
+        if (userop.isEmpty()){
+            return null;
+        }
+        User user = userop.get();
         List<ParkingLot> parkingLots = parkingLotService.getAllParkingLots();
+        for (ParkingLot parkingLot : parkingLots) {
+            boolean isFavorite = user.getFavourites() != null && user.getFavourites().contains(parkingLot);
+            parkingLot.setFavorite(isFavorite);
+        }
         return parkingLots;
 
     }

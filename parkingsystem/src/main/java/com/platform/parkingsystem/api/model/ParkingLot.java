@@ -6,6 +6,7 @@ import com.platform.parkingsystem.api.repository.ReservationRepository;
 import jakarta.validation.constraints.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -30,7 +31,8 @@ public class ParkingLot {
 
     private int capacity;
     private String city;
-
+    @Transient
+    private boolean isFavorite;
     @JsonIgnore
     @CreatedDate
     private LocalDateTime createdAt;
@@ -147,6 +149,14 @@ public class ParkingLot {
 
     public String getCity() {
         return city;
+    }
+
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
     }
 
 
