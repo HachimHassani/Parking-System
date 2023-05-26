@@ -39,12 +39,20 @@ export class ParkingCardComponent  extends CardComponent<ParkingCardData>{
 			return;
 		this.data.inCollection = !this.data.inCollection;
 		this.collectionClickAninmate();
+		//get user id
+		const userId = this.cookieService.get('id');
+		//get token
+		const token = this.cookieService.get('token');
 		//body
 		const body = {};
 		//add to favorite
-		this.collectionSubscription = this.http.post(`/api/id/favourites/`, body)
+		this.collectionSubscription = this.http.post(`/api/users/${userId}/favourites/${this.data.id}/`, body, {
+			headers: {
+				'Authorization': `Bearer ${token}`
+			}
+		})
 		.subscribe((res) => {
-			
+			console.log(res);
 		});
 	}
 

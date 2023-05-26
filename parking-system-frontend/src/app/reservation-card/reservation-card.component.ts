@@ -1,6 +1,8 @@
 import { CSP_NONCE, Component, OnDestroy, OnInit } from '@angular/core';
 import { CardComponent } from '../card/card.component';
 import { Subscribable, Subscription, timer } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { CookieService } from 'ngx-cookie-service';
 
 
 export enum ReservationState {
@@ -11,6 +13,9 @@ export enum ReservationState {
 
 export interface ReservationData {
 	parkingNumber: number,
+	parkingId: string,
+	parkingName?: string,
+	parkingCity?: string,
 	state: ReservationState,
 	to: number,
 	from: number
@@ -23,6 +28,10 @@ export interface ReservationData {
 })
 export class ReservationCardComponent extends CardComponent<ReservationData> implements OnInit, OnDestroy{
 	
+	constructor(private http: HttpClient, private cookieService: CookieService) {
+		super();
+	}
+
 	private stateString = [
 		"Before Available",
 		"Before Finished",
@@ -64,10 +73,11 @@ export class ReservationCardComponent extends CardComponent<ReservationData> imp
 		//this.parkingNumber = Math.floor(Math.random() * 100);
 		this.timerSubscription = timer(0, 1000).subscribe(() => {
 			this.getTimerValue();
-		})
+		});
 	}
 
+
 	ngOnDestroy(): void {
-		this.timerSubscription?.unsubscribe()
+		this.timerSubscription?.unsubscribe();
 	}
 }

@@ -70,12 +70,14 @@ export class LoginPageComponent implements OnInit{
 		.subscribe((data: any) => {
 			//get token
 			const token = data.access_token;
+			const id = data.user_id;
 			//add token to cookies
 			this.cookieService.set('token', token);
+			this.cookieService.set('id', id);
 			//end
 			this.loadingComponent.hide();
-			this.router.navigate(['/']);
 			authSubscription.unsubscribe();
+			this.router.navigate(['/']);
 		});
 	}
 

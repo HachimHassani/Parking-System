@@ -19,10 +19,35 @@ export class ReservationsPageComponent extends ProgressiveCardsLoaderComponent<R
 	}
 
 	subscription: Subscription | undefined;
+	parkingSubscription: Subscription | undefined;
 
-	async fetchReservations() {
+	parkinglots :any= {};
+
+	async fetchParkinglots() {
 		await new Promise(r => setTimeout(r, 0));
 		this.loadingComponenet.show();
+		//get user token
+		const token = this.cookieService.get('token');
+		this.parkingSubscription = this.http.get<Array<any>>('api/parking-lots', {
+		//fetch data from api
+			headers: {
+				'Authorization': `Bearer ${token}`
+			}
+		}).subscribe((res: Array<any>) => {
+			//print data
+			res.forEach((data: any) => {
+				this.parkinglots[data.id] = {
+					name: data.name,
+					city: data.name
+				}
+			});
+			console.log(this.parkinglots);
+			//fetch reservations
+			this.fetchReservations();
+		});
+	}
+
+	fetchReservations() {
 		//get user token
 		const token = this.cookieService.get('token');
 		//fetch data from api
@@ -44,9 +69,15 @@ export class ReservationsPageComponent extends ProgressiveCardsLoaderComponent<R
 				let reservationData: ReservationData = {
 					parkingNumber: parseInt(data.spaceName.split(" ")[1]),
 					state: ReservationState.FINISHED,
+					parkingId: data.spaceId,
 					from: from,
 					to: to
 				};
+				//parking info
+				if (reservationData.parkingId) {
+					reservationData.parkingName = this.parkinglots[reservationData.parkingId]?.name;
+					reservationData.parkingCity = this.parkinglots[reservationData.parkingId]?.city;
+				}
 				//get current state
 				if (currentTime < from) {
 					reservationData.state = ReservationState.RESERVED;
@@ -68,10 +99,11 @@ export class ReservationsPageComponent extends ProgressiveCardsLoaderComponent<R
 	}
 
 	override ngAfterViewInit(): void {
-		this.fetchReservations();
+		this.fetchParkinglots();
 	}
 
 	ngOnDestroy(): void {
+		this.parkingSubscription?.unsubscribe();
 		this.subscription?.unsubscribe();
 	}
 }
