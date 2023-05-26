@@ -2,6 +2,9 @@ import { AfterViewInit, Component, ContentChild, OnInit, ViewChild, ViewContaine
 import { Router } from '@angular/router';
 import { NotificationComponent } from '../notification/notification.component';
 import { LoadingComponent } from '../loading/loading.component';
+import { CookieService } from 'ngx-cookie-service';
+import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { Observable, catchError, throwError } from 'rxjs';
 
 
 @Component({
@@ -13,7 +16,7 @@ export class LoginPageComponent implements OnInit{
 	@ViewChild(LoadingComponent) loadingComponent!:LoadingComponent;
 	@ViewChild('notificationContainer', {read: ViewContainerRef}) notificationContainer!:ViewContainerRef;
 
-	constructor(private router: Router) {}
+	constructor(private router: Router, private cookieService: CookieService, private http: HttpClient) {}
 
 	//form information
 	isLogin = true;
@@ -27,6 +30,9 @@ export class LoginPageComponent implements OnInit{
 
 	//signin data
 	signinData = {
+		firstName: '',
+		lastName: '',
+		licensePlate: '',
 		email: '',
 		password: '',
 		confirmPassword: ''
@@ -37,59 +43,74 @@ export class LoginPageComponent implements OnInit{
 	}
 	
 	//submit
-	//authentification
-	async checkUserAuthentification() {
-		//artifcial wait to fetch data
-		await new Promise(r => setTimeout(r, 1000));
-		return this.loginData.email == "haitamksiks2001@gmail.com" && this.loginData.password == "123456789";
-	}
-
 	//on login click
-	async onLoginClicked() {
+	onLoginClicked() {
 		//set loading
 		this.loadingComponent.show();
-		//verify user authentification
-		const connected = await this.checkUserAuthentification();
-		//set loading back to normal
-		this.loadingComponent.hide();
-		if (connected) {
-			await new Promise(r => setTimeout(r, 550));
+
+		//authentifictaion
+		const authRequest = this.http.post('/api/auth/authenticate', {
+			email: this.loginData.email,
+			password: this.loginData.password
+		});
+
+		//error
+		const handleAuthError = (error: HttpErrorResponse) => {
+			this.loadingComponent.hide();
+			let notification = this.notificationContainer.createComponent<NotificationComponent>(NotificationComponent);
+			notification.instance.show("error", "Password Error", 3)
+				.then(() => {
+					notification.destroy();
+				});
+			return throwError(() => new Error('bad auth!'));
+		};
+
+		//subscrible
+		const authSubscription = authRequest.pipe(catchError(handleAuthError))
+		.subscribe((data: any) => {
+			//get token
+			const token = data.access_token;
+			const id = data.user_id;
+			//add token to cookies
+			this.cookieService.set('token', token);
+			this.cookieService.set('id', id);
+			//end
+			this.loadingComponent.hide();
+			authSubscription.unsubscribe();
 			this.router.navigate(['/']);
-			return;
-		}
-		//notify for bad passowrd
-		let notification = this.notificationContainer.createComponent<NotificationComponent>(NotificationComponent);
-		await notification.instance.show("error", "Password Error", 3);
-		notification.destroy();
+		});
 	}
 
-	//signin
-	async createAccount() {
-		//artifcial wait to fetch data
-		await new Promise(r => setTimeout(r, 1000));
-		return this.signinData.password == this.signinData.confirmPassword;
-	}
 
 	//signin clicked
 	async onSigninClicked() {
-		//set loading
-		this.loadingComponent.show();
-		//verify user authentification
-		const created = await this.createAccount();
-		//set loading back to normal
-		this.loadingComponent.hide()
+		//create account
+		const canCreate = this.signinData.password == this.signinData.confirmPassword;
+		
 		//create notification
 		let notification = this.notificationContainer.createComponent<NotificationComponent>(NotificationComponent);
-		if (created) {
+		if (!canCreate) {
+			//notify for bad passowrd
+			notification.instance.show("error", "Password confirm incorrect", 3)
+			.then(() => {
+				notification.destroy();
+			});
+		}
+		//start loading
+		this.loadingComponent.show();
+		//registration
+		const regRequest = this.http.post('/api/auth/register', this.signinData);
+		//subscrible
+		const reqSubscription = regRequest.subscribe((data: any) => {
 			this.isLogin = true;
 			//notify for creation
-			await notification.instance.show("correct", "Account Created", 3);
-		}
-		else {
-			//notify for bad passowrd
-			await notification.instance.show("error", "Password confirm incorrect", 3);
-		}
-		notification.destroy();
+			notification.instance.show("correct", "Account Created", 3)
+			.then(() => {
+				notification.destroy();
+			});
+			//set loading back to normal
+			this.loadingComponent.hide()
+		});
 	}
 	
 	//buttons events

@@ -1,13 +1,15 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { CardComponent } from '../card/card.component';
 
+export type PaymentData = any;
+
 @Component({
 	selector: 'app-payment-card',
 	templateUrl: './payment-card.component.html',
 	styleUrls: ['./payment-card.component.css']
 })
-export class PaymentCardComponent extends CardComponent {
-	id = 0;
+export class PaymentCardComponent extends CardComponent<PaymentData> {
+	id = 0
 
 	onDeleteClicked() {
 		this.hide();

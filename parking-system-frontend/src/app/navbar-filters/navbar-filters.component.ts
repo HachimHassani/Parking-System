@@ -47,7 +47,17 @@ export class NavbarFiltersComponent implements OnInit{
 		},
 	];
 	//cities
-	cities = citiesJson;
+	cities = [
+		{ 'name': 'Rabat' },
+		{ 'name': 'Tanger' },
+		{ 'name': 'Marrakesh' },
+		{ 'name': 'Oujda' },
+		{ 'name': 'Casablanca' },
+		{ 'name': 'Agadir' },
+		{ 'name': 'Mohammedia' },
+		{ 'name': 'Fes' },
+		{ 'name': 'Tazax' }
+	];
 	//fitler
 	filter: ParkingFilter = {
 		

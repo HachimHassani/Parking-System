@@ -29,6 +29,25 @@
 
         <!--Signin forum-->
         <form class="login-forum" *ngIf="!isLogin">
+
+            <div class="login-forum-div">
+                <label class="login-forum-label"> First Name </label>
+                <input #signinFirstName (keypress)="signinData.firstName=signinFirstName.value" (blur)="signinData.email=signinEmail.value"
+                    class="login-forum-input" name="signinFirstName" type="text" placeholder="Haitam" />
+            </div>
+
+            <div class="login-forum-div">
+                <label class="login-forum-label"> Last Name </label>
+                <input #signinLastName (keypress)="signinData.lastName=signinLastName.value" (blur)="signinData.email=signinEmail.value"
+                    class="login-forum-input" name="signinLastName" type="text" placeholder="Ksiks" />
+            </div>
+
+            <div class="login-forum-div">
+                <label class="login-forum-label"> License Plate </label>
+                <input #signinLicensePlate (keypress)="signinData.licensePlate=signinLicensePlate.value" (blur)="signinData.email=signinEmail.value"
+                    class="login-forum-input" name="signinLicensePlate" type="text" placeholder="AB14493" />
+            </div>
+
             <div class="login-forum-div">
                 <label class="login-forum-label"> Email </label>
                 <input #signinEmail

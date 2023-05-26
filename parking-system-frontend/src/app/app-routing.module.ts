@@ -8,6 +8,7 @@ import { ReservationsPageComponent } from './reservations-page/reservations-page
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ReservationAddComponent } from './reservation-add/reservation-add.component';
 import { ParkingInfoComponent } from './parking-info/parking-info.component';
+import { authGuard } from './auth.guard';
 
 const routes: Routes = [
   //user
@@ -23,6 +24,9 @@ const routes: Routes = [
   {
     path: '',
     component: ParkingsPageComponent,
+    canActivate: [
+      authGuard
+    ]
   },
   //historique
   {

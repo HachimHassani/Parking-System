@@ -1,32 +1,44 @@
-<div class="card reservation-card" [ngClass]="{
+<div name="reservationCard" class="card reservation-card" 
+    [ngClass]="{
         'card-visible': visible
-    }">
+    }"
+    *ngIf="data?.state != 2">
     <div class="reservation-card-main">
         <h1 class="reservation-card-place">
-            {{ parkingNumber | number: '2.'}}
+            {{ data?.parkingNumber | number: '2.'}}
         </h1>
 
         <div class="reservation-parking-info">
-            <h2> Parking's name </h2>
-            <p> Marrakech </p>
+            <h2> {{ data?.parkingName }} </h2>
+            <p> {{ data?.parkingCity }} </p>
         </div>
 
         <div class="reservation-time">
-            <h1> 16h 32min 21s </h1>
-            <h3> Before Finished </h3>
+            <h1> {{ time }} </h1>
+            <h3>{{ getStateName() }} </h3>
         </div>
     </div>
 
     <div class="reservation-card-timeline">
         <span class="reservation-card-step-cicle reservation-card-step-filled"> </span> 
 
-        <span class="reservation-card-step-line reservation-card-step-filled"> </span>
+        <span class="reservation-card-step-line " 
+        [ngClass]="{
+            'reservation-card-step-filled': data?.state == 1 || data?.state == 2
+        }"> </span>
         
-        <span class="reservation-card-step-cicle reservation-card-step-filled"> </span>
+        <span class="reservation-card-step-cicle "
+        [ngClass]="{
+            'reservation-card-step-filled': data?.state == 1 || data?.state == 2
+        }"> </span>
 
-        <span class="reservation-card-step-line">  </span>
+        <span class="reservation-card-step-line " [ngClass]="{
+            'reservation-card-step-filled': data?.state == 2
+        }"> </span>
 
-        <span class="reservation-card-step-cicle"> </span>
+<span class="reservation-card-step-cicle " [ngClass]="{
+            'reservation-card-step-filled': data?.state == 2
+        }"> </span>
     </div>
 
     <div class="reservation-card-timeline-description">
