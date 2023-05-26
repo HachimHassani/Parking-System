@@ -1,5 +1,6 @@
 package com.platform.parkingsystem.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -12,9 +13,11 @@ public class Reservation {
     @Id
     private String id;
 
+    @JsonIgnore
     @DBRef(lazy = true)
     private User user;
 
+    @JsonIgnore
     @DBRef(lazy = true)
     private ParkingSpace parkingSpace;
 
@@ -51,12 +54,13 @@ public class Reservation {
         this.user = user;
     }
 
-    public ParkingSpace getReservedSpace() {
-        return parkingSpace;
+
+    public String getSpaceName() {
+        return this.parkingSpace.getSpaceNumber();
     }
 
-    public void setReservedSpace(ParkingSpace parkingSpace) {
-        this.parkingSpace = parkingSpace;
+    public String getSpaceId(){
+        return this.parkingSpace.getParkingLot().getId();
     }
 
     public LocalDateTime getFrom() {

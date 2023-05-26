@@ -1,20 +1,27 @@
 package com.platform.parkingsystem.api.model;
+import com.platform.parkingsystem.api.token.Token;
+import com.platform.parkingsystem.api.user.Role;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+
+import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
 import org.springframework.security.core.userdetails.UserDetails;
 
 
 import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
+
 import java.util.List;
-import java.util.stream.Collectors;
+@Builder
 
 
 @Document(collection = "users")
+@Data
+@AllArgsConstructor
 public class User  implements UserDetails {
     @Id
     private String id;
@@ -27,7 +34,12 @@ public class User  implements UserDetails {
     private String licensePlate;
     private String password;
 
-    private List<String> roles;
+
+
+
+    private Role role;
+    @DBRef(lazy = true)
+    private List<Token> tokens;
 
     @DBRef(lazy = true)
     private List<ParkingLot> favourites;
@@ -110,12 +122,7 @@ public class User  implements UserDetails {
         return password;
     }
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        Collection<GrantedAuthority> authorities = new HashSet<>();
-        for (String role : roles) {
-            authorities.add(new SimpleGrantedAuthority(role));
-        }
-        return authorities;
+    public Collection<? extends GrantedAuthority> getAuthorities() {return role.getAuthorities();
     }
 
     public List<Reservation> getReservations() {
@@ -126,13 +133,7 @@ public class User  implements UserDetails {
         this.reservations = reservations;
     }
 
-    public void setRoles(List<String> roles) {
-        this.roles = roles;
-    }
 
-    public List<String> getRoles() {
-        return roles;
-    }
 
     @Override
     public String getUsername() {

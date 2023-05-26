@@ -19,12 +19,17 @@ public interface ReservationRepository extends MongoRepository<Reservation, Stri
 
     List<Reservation> findByUserAndActiveTrue(User user);
 
+    List<Reservation> findAllByUser(User user);
+
+    List<Reservation> findRecentReservationsByUser(User user);
+    List<Reservation> findByParkingSpace(ParkingSpace parkingSpace);
 
 
-
-     List<Reservation> findByFromBeforeAndToAfterAndParkingSpaceAndActiveTrue(LocalDateTime start, LocalDateTime end, ParkingSpace parkingSpace);
+    List<Reservation> findByFromBeforeAndToAfterAndParkingSpaceAndActiveTrue(LocalDateTime start, LocalDateTime end, ParkingSpace parkingSpace);
 
     List<Reservation> findByFromBeforeAndToAfterAndUserAndActiveTrue(LocalDateTime start, LocalDateTime end, User user);
 
     Optional<Reservation> findByUserAndParkingSpaceAndActiveTrue(User user, ParkingSpace parkingSpace);
+
+
 }

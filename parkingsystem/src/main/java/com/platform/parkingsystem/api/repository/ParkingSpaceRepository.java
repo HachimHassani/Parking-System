@@ -13,6 +13,6 @@ public interface ParkingSpaceRepository extends MongoRepository<ParkingSpace, St
 
     ParkingSpace findByParkingLotIdAndId(String parkingLotId, String parkingSpaceId);
 
-    List<ParkingSpace> findByUserIsNull();
+
 
 }
