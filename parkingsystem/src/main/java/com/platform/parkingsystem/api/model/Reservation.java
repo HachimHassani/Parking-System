@@ -59,6 +59,10 @@ public class Reservation {
         return this.parkingSpace.getSpaceNumber();
     }
 
+    public String getSpaceId(){
+        return this.parkingSpace.getId();
+    }
+
     public LocalDateTime getFrom() {
         return from;
     }
